@@ -1,0 +1,24 @@
+- content_for :meta_title do
+  Regions
+%h1= large_icon('Home') + ' ' + yield(:meta_title).strip
+
+%div.box
+  .float-right= render :partial => "/shared/search"
+  %span.hmenu
+    = icon "Plus", new_admin_region_path
+    = link_to "Add a Region", new_admin_region_path
+  = clear
+  
+%table.full-width
+  %tr
+    %th Location
+    %th Images
+    %th Options
+  - for region in @regions
+    %tr{ :class => cycle('odd','even') }
+      %td= link_to(region.title, edit_admin_region_path(region))
+      %td= link_to("%d images" % region.images_count, [:admin, region, :images])
+      %td
+        = feature_icon_select(region, region.title)
+        = icon "Write", edit_admin_region_path(region)
+        = trash_icon(region, admin_region_path(region), "#{region.title}")

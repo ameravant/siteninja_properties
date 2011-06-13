@@ -1,0 +1,21 @@
+<%- address = "#{@property.address.strip}, #{@property.city}, #{@property.state}" -%>
+<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=<%= @cms_config["#{'development_' if Rails.env.development?}keys"]['google_maps'] %>" type="text/javascript"></script>
+<script type="text/javascript" charset="utf-8">
+  Event.observe(window, "load", function() {
+    if (GBrowserIsCompatible()) {
+      var map = new GMap2($("google_map"));
+      map.addControl(new GSmallMapControl());
+      // map.addControl(new GOverviewMapControl());
+      // map.addControl(new GMapTypeControl());
+      map.setMapType(G_NORMAL_MAP);
+      var geocoder = new GClientGeocoder();
+      var myLatLon = geocoder.getLatLng(
+        "<%= address %>", function(point) {
+          if (point) map.setCenter(point, 15);
+          if (point) map.addOverlay(new GMarker(point));
+        }
+      );
+    }
+  });
+  Event.observe(window, "unload", GUnload)
+</script>

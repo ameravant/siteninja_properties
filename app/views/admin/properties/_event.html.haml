@@ -1,0 +1,24 @@
+%div{:class => "event"}
+  - fields_for_event(event) do |p|
+    %table{ :cellspacing => "0" }
+      %tr{ :class => "form-option #{cycle('even', 'odd')}" }
+        %td.big
+          = p.label :name
+        %td
+          = p.text_field :name, :class => "big", :size => 50, :value => @property.formatted_address
+      %tr{:class => "form-option #{cycle('even', 'odd')} top"}
+        %td
+          = p.label :date_and_time, "Start date/time"
+        %td
+          = p.datetime_select :date_and_time
+      %tr.top
+        %td
+          = p.label :end_date_and_time, "End date/time"
+        %td
+          = p.datetime_select :end_date_and_time
+
+    %h2= p.label :blurb, "Description"
+    = p.text_area :blurb, :size => "80x10"
+
+    %br
+    = link_to_function "remove", "jQuery(this).closest('.event').fadeOut('slow'); jQuery('.delete_#{event.id}').attr('value','true');"

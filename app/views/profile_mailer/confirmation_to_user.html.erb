@@ -1,0 +1,13 @@
+
+<div>
+  <%= "Hi %s" % @profile.person.name %>,
+  Thank you for signing up to JustGuideMe.
+</div>
+  ______________________________________________
+
+<div>
+  <p>Email: <%= h @profile.person.email %></p>
+  <%- unless @profile.person.phone.blank? -%>
+   <p>Phone: <%= h @profile.person.phone %></p>
+  <%- end -%>
+</div>

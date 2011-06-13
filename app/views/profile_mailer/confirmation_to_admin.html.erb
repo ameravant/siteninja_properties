@@ -1,0 +1,9 @@
+A person signed up to JustGuideMe. To confirm this person, <%= link_to("click here", admin_people_url)%>.
+<br />
+Name:  <%= h @profile.person.name %><br />
+Email: <%= h @profile.person.email %><br />
+<%- unless @profile.person.phone.blank? -%>
+Phone: <%= h @profile.person.phone %><br />
+<%- end -%>
+
+

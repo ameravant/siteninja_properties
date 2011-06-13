@@ -1,0 +1,32 @@
+- content_for :meta_title do
+  ="Add images to #{h @owner.title}"
+- content_for :head do
+  = javascript_include_tag "/plugin_assets/justguideme/javascripts/multi-field.js"
+  = stylesheet_link_tag "/plugin_assets/justguideme/stylesheets/add_multiple.css"
+
+%h1= yield :meta_title
+=link_to "Add Image", "", :class => "add-new-image"
+
+-form_for [:admin, @owner], :html => { :multipart => true, :onsubmit => "form_submitted('Uploading file and making thumbnails...')" } do |f|
+  .add-images
+    -f.fields_for :images do |img|
+      .img-form
+        -if img.object.image && !img.object.new_record?
+          = image_tag(img.object.image.url(:small), :alt => h(img.object.caption))
+          %span
+            =img.label :title
+            =img.text_field :title, :value => ((img.object.title && img.object.title.size > 3) ? img.object.title : img.object.viewable.formatted_address)
+            =img.label :image
+            =img.file_field :image
+        -else
+          %span{:style => "margin-left:7.3em;"}
+            =img.label :title
+            =img.text_field :title, :value => img.object.viewable.formatted_address
+            =img.label :image
+            =img.file_field :image
+  %span.multi
+    -fancy_submit [:admin, @owner] do
+      =f.submit "Save this"
+%span.hidden-for-js= @owner.formatted_address
+  
+  

@@ -1,0 +1,24 @@
+span.sold{
+	background:red;
+	line-height:1.3em;
+}
+span.pending{
+	background:green;
+}
+#main-column #member a.auto-width span {
+	text-decoration:none;
+}
+#main-column #member .auto-width {
+	width:auto;
+}
+span.sold, span.pending{
+	padding:3px;
+	margin:5px;
+	color:#fff;
+	width:auto;
+}
+span.status {
+	float:right;
+	margin-top:20px;
+	margin-right:11.5em;
+}

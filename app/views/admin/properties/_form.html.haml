@@ -1,0 +1,69 @@
+- form_for [:admin, @property], :html => { :onsubmit => "form_submitted()" } do |f|
+  %fieldset
+    - unless @property.new_record?
+      #sold
+        = f.check_box :sold
+        = f.label :sold, "Hide Property"
+        = clear
+    - else
+      = f.hidden_field :sold, :value => "false"
+    #property-status
+      %h3 Property Status
+      = select("property", "status", options_for_select([["Active", "Active"], ["Pending", "Pending"], ["Sold", "Sold"]], @property.status || "Active"), {:include_blank => false})
+    #property-address
+      %h3 Property Address
+      %dl
+        %dt.form-label= f.label :address
+        %dd.form-option= f.text_field :address, :size => "44" 
+        %dt.form-label= f.label :city
+        %dd.form-option= f.text_field :city, :size => "44" 
+        %dt.form-label= f.label :state
+        %dd.form-option= f.text_field :state, :size => "44" 
+        %dt.form-label= f.label :zip
+        %dd.form-option= f.text_field :zip, :size => "44" 
+        %dt.form-label= f.label :beds_count
+        %dd.form-option= f.text_field :beds_count, :size => "44" 
+        %dt.form-label= f.label :baths_count
+        %dd.form-option= f.text_field :baths_count, :size => "44" 
+    #property-other
+      %h3 Other Details
+      %dl
+        %dt.form-label= f.label :region_id
+        %dd.form-option= f.select :region_id, Region.all.sort_by(&:title).collect {|r| [r.title, r.id]}, {:include_blank => "Select a region"}
+        %dt.form-label= f.label :property_type_id
+        %dd.form-option= f.select :property_type_id, PropertyType.all.sort_by(&:title).collect {|r| [r.title, r.id]}, {:include_blank => "Select a property type"}
+        %dt.form-label= f.label :asking_price
+        %dd.form-option
+          $
+          = f.text_field :asking_price, :size => "10"
+        %dt.form-label= f.label :reduced_price
+        %dd.form-option
+          $
+          = f.text_field :reduced_price, :size => "10"
+        %dt.form-label= f.label :date_listed
+        %dd.form-option= f.datetime_select :date_listed
+        %dt.form-label
+          = f.label :date_reduced
+          .note{:style => "font-size: .7em; font-weight: normal;"} Date the price of the property was reduced.
+        %dd.form-option= f.datetime_select :date_reduced
+      / %dt.form-label
+      / .events{:id => "events"}
+      /   Open Houses
+      / = add_event_link "Add Open House"
+    = clear
+    %dl
+      %dt.form-label= f.label :description, "Short Description"
+      %dd.form-option= f.text_area :description, :size => "75x12"
+      %dt.form-label= f.label :body, "Long Description"
+      %dd.form-option= f.text_area :body, :size => "85x35", :class => "mceEditor", :value => (@property.body.blank? ? default_body : @property.body)
+      %dt.form-label= f.label :showing_instructions
+      %dd.form-option= f.text_area :showing_instructions, :size => "75x12"
+      %dt.form-label= f.label :directions
+      %dd.form-option= f.text_area :directions, :size => "75x12"
+    = f.submit
+    
+- content_for :head do
+  %style{:type => "text/css"}
+    div#property-address { float: left; width: 400px; margin-right: 20px; }
+    div#property-other { float: right; width: 400px; }
+    div#sold label { font-size: 1.2em; font-weight: bold; font-color: #D43A38; }

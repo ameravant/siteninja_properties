@@ -1,0 +1,41 @@
+- content_for :meta_title do
+  = h @owner.title
+
+%h1= yield :meta_title
+
+%div{:class => "box middle"}
+  #reorder_status{:class => "gray float-right", :style => "display: none;"}
+    = "#{spinner} Reordering images..."
+  -if params[:property_id]
+    %span.hmenu
+      = icon "Plus", [:add_multiple, :admin, @owner, :images]
+      = link_to "Add multiple images", [:add_multiple, :admin, @owner, :images]
+    %span.hmenu
+      = icon "Plus", [:new, :admin, @owner, :image]
+      = link_to "Add a single image", [:new, :admin, @owner, :image]
+  -else
+    %span.hmenu
+      = icon "Plus", [:new, :admin, @owner, :image]
+      = link_to "Add images", [:new, :admin, @owner, :image]
+  %span.hmenu
+    = icon "Plus", [:edit, :admin, @owner]
+    = link_to "Edit #{@owner.title}", [:edit, :admin, @owner]
+
+- unless @images.empty?
+
+  %p
+    = icon "Info2"
+    Reorder images by clicking and dragging them with your mouse. The first image will be used as the cover image.
+  %ul#images
+    - for image in @images.sort_by(&:position)
+      %li{:class => "image", :id => "image_#{image.id}"}
+        .image-thumb= image_tag(image.image.url(:small), :alt => h(image.caption))
+        .image-options
+          = link_to icon("Search"), image.image.url(:large), :class => "icon", :rel => "lightbox[page]", :title => h(image.caption), :class => "fancy"
+          = icon "Write", [:edit, :admin, @owner, image]
+          = link_to_remote icon("Trash"), :url => [:admin, @owner, image], :method => :delete, :class => "icon", :confirm => "Really delete this image? This cannot be undone." unless ((image == @owner.images.sort_by(&:position).first and @owner.respond_to?(:features) and @owner.features.size > 0))
+          - if image.viewable_type == "Gallery"
+            = feature_icon_select(@owner, @owner.title) 
+  = clear
+  = sortable_element :images, :constraint => false, :url => [:reorder, :admin, @owner, :images], :method => :put, :loading => "$('reorder_success').hide(); $('reorder_failure').hide(); $('reorder_status').show()", :success => "$('reorder_success').show()", :failure => "$('reorder_failure').show()", :complete => visual_effect(:fade, "reorder_status", :delay => 1) if @images.size > 1
+

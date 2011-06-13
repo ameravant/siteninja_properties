@@ -1,0 +1,275 @@
+- content_for :meta_title do
+  == #{@property.formatted_address} Property Listing
+
+- if params[:print] == "true"
+  = render :partial => "print"
+- else
+  - content_for :head do
+    :javascript
+      jQuery(function() { 
+      // setup ul.tabs to work as tabs for each div directly under div.panes 
+      jQuery("ul.tabs").tabs("div.panes > div.panel"); 
+      });
+    %style{:type => "text/css", :media => "screen"}
+      ul.tabs { list-style: none; margin: 0; padding: 0; position: relative; top: 1px; font-size: .9em; }
+      ul.tabs li { display: block; float: left; }
+      ul.tabs li a { display: block; float: left; padding: 0 10px 0 10px; border: 1px solid #999; background: #F3F1EA; text-decoration: none; -webkit-border-radius: 4px 4px 0 0; -moz-border-radius: 4px 4px 0 0; color: #666; }
+      ul.tabs li a:focus { outline: none; }
+      ul.tabs li a:hover { color: #D43A38 !important; background: #FFFCCF !important; }
+      ul.tabs li a.current { background: #fff; border-bottom: 1px solid #fff; color: #D43A38; }
+      ul.tabs li a.current:hover { background: #fff !important; color: #D43A38; }
+      div.panes { border: 1px solid #999; background: #fff; padding: 10px; }
+      label { display: block; font-size: 1.3em; line-height: 2em; margin: 10px 0 0; color: #333; }
+      label.inline { display: inline; }
+      label:hover { background: none !important; color: #999; }
+      input { font-size: 1.3em; }
+      ul.templates { list-style: none; width: 740px; height: 365px; overflow: auto; margin: 10px 0; padding: 0; text-transform: uppercase; font-size: .7em; border-bottom: 1px solid #6D869F; border-top: 1px solid #6D869F; background: #B5CADF; }
+      ul.templates li { float: left; padding: 10px; text-align: center; width: 100px; border-bottom: 1px solid #1D4267; }
+      ul.templates label { display: inline; float: none; width: inherit; }
+      div.panes { color: #222; }
+      div.panes h2 { color: #222; }
+      div.panes p { margin: 0; padding: .5em 0 1.5em; }
+      div#map-outer { width: 278px; }
+      div#google_map { width: 278px; height: 250px; }
+      div.sidebar .images { width: 278px; text-align: left; }
+      div.sidebar .scrollable { width: 278px; }
+      div#property-price { margin: 0 0 8px; }
+      div#property-price #price { font-size: 1.4em; }
+      div#property-price .strikethrough { text-decoration: line-through; color: #999; }
+      span#main-address { font-size: 1.2em; font-weight: bold; }
+      address { font-style: normal; line-height: 1em; margin: 0 0 8px; }
+      h1 { padding-bottom: 10px; }
+      div#primary-info, #contact-info, div.images { border: 1px solid #999; background: #FFFCCF; padding: 10px; margin-bottom: 10px; }
+      div#contact-info { background: url("/plugin_assets/justguideme/images/side-column-background.gif") repeat-x scroll center top #E5E4DB; border: 1px solid #CDDBE3; border-radius: 0 0 5px 5px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); margin-bottom: 10px; padding: 10px; }
+      span.price { color: #3F9200; font-weight: bold; }
+      div#owner-name { font-size: 1.2em; font-weight: bold; margin-bottom: 8px; }
+      div#contact-info, div.images { background: #F3F1EA; line-height: 1.4em; }
+      div#contact-info-detail { font-size: .85em; }
+      div.panel h3 { margin: 0; padding: .5em 0 1.5em; }
+      ul.list-of-properties, ul.list-of-open-houses { margin: 0; padding: 0; }
+      ul.list-of-properties li, ul.list-of-open-houses li { list-style: none; display: block; margin: 0 0 10px 0; line-height: 1.4em; }
+      div.open-house-date { font-weight: bold; color: #325D95; }
+      ul.list-of-open-houses p { margin: 0; padding: 4px 0 6px; font-size: .85em; }
+      div#primary-info.property-sold { background: #FFCFD7 !important; }
+      span.sold { font-weight: bold; color: #D6343A; font-size: 1.4em; }
+      div.images { margin-top: 0; }
+      div.print-panes { display: none; }
+      ==.print { height: 16px; line-height: 14px; text-decoration: none; font-weight: bold; float: right; display: block; margin-bottom: 5px; font-size: 16px; background: transparent url('http://www.site-ninja.com/plugin_assets/siteninja_core/images/icons/gray/16x16/Printer.png') no-repeat left center; padding-left: 20px; vertical-alignment: middle; }
+    %style{:type => "text/css", :media => "print"}
+      div.panes { border: 1px solid #999; background: #fff; padding: 10px; }
+      label { display: block; font-size: 1.3em; line-height: 2em; margin: 10px 0 0; color: #333; }
+      label.inline { display: inline; }
+      label:hover { background: none !important; color: #999; }
+      input { font-size: 1.3em; }
+      ul.templates { list-style: none; width: 740px; height: 365px; overflow: auto; margin: 10px 0; padding: 0; text-transform: uppercase; font-size: .7em; border-bottom: 1px solid #6D869F; border-top: 1px solid #6D869F; background: #B5CADF; }
+      ul.templates li { float: left; padding: 10px; text-align: center; width: 100px; border-bottom: 1px solid #1D4267; }
+      ul.templates label { display: inline; float: none; width: inherit; }
+      div.panes { color: #222; }
+      div.panes h2 { color: #222; }
+      div.panes p { margin: 0; padding: .5em 0 1.5em; }
+      div#map-outer { width: 278px; padding: 10px; border: 1px solid #999; background: #F3F1EA; }
+      div#google_map { width: 278px; height: 250px; }
+      div.sidebar .images { width: 278px; text-align: left; }
+      div.sidebar .scrollable { width: 278px; }
+      div#property-price { margin: 0 0 8px; }
+      div#property-price #price { font-size: 1.4em; }
+      div#property-price .strikethrough { text-decoration: line-through; color: #999; }
+      span#main-address { font-size: 1.2em; font-weight: bold; }
+      address { font-style: normal; line-height: 1em; margin: 0 0 8px; }
+      h1 { padding-bottom: 10px; }
+      div#primary-info, #contact-info, div.images { border: 1px solid #999; background: #FFFCCF; padding: 10px; margin-bottom: 10px; }
+      span.price { color: #3F9200; font-weight: bold; }
+      div#owner-name { font-size: 1.2em; font-weight: bold; margin-bottom: 8px; }
+      div#contact-info, div.images { background: #F3F1EA; line-height: 1.4em; }
+      div#contact-info-detail { font-size: .85em; }
+      div.panel h3 { margin: 0; padding: .5em 0 1.5em; }
+      ul.list-of-properties, ul.list-of-open-houses { margin: 0; padding: 0; }
+      ul.list-of-properties li, ul.list-of-open-houses li { list-style: none; display: block; margin: 0 0 10px 0; line-height: 1.4em; }
+      div.open-house-date { font-weight: bold; color: #325D95; }
+      ul.list-of-open-houses p { margin: 0; padding: 4px 0 6px; font-size: .85em; }
+      div#primary-info.property-sold { background: #FFCFD7 !important; }
+      span.sold { font-weight: bold; color: #D6343A; font-size: 1.4em; }
+      div.images { margin-top: 0; }
+      ul.tabs { display: none; }
+      div.pane { display: none; }
+      div#login-box { display: none; }
+      div#pre-content-outer { display: none; }
+      div#main-column { 450px; float: left; }
+      div#side-column { width: 250px; float: right; display: block; }
+      div.print-panes { display: block; width: 450px; float: left; font-size: .8em; line-height: 1.4em; }
+      div.screen { display: none; }
+  - content_for :side_column do
+    = link_to("Print", "javascript:void(0)", :onclick => "window.open ('#{property_path(@property)}?print=true','printproperty','menubar=0,width=700,height=500');", :class => "print")
+    = clear
+  #primary-info{:class => (@property.sold? ? "property-sold" : "property-available")}
+    %address
+      %span#main-address= @property.address + ", "
+      == #{@property.city}, #{@property.state} #{@property.zip}
+    #property-price
+      #price
+        - if @property.sold?
+          %span.sold Sold
+          %span.strikethrough= number_to_currency(@property.reduced_price)
+        - else
+          - if @property.reduced_price != @property.asking_price
+            %span.price= number_to_currency(@property.reduced_price)
+            %span.strikethrough= number_to_currency(@property.asking_price)
+          - else
+            %span.price= number_to_currency(@property.asking_price)
+        =display_status(@property)
+    - unless @property.beds_count.blank? and @property.baths_count.blank?
+      #property-size
+        = pluralize(@property.beds_count, "Bed")
+        |
+        = pluralize(@property.baths_count, "Bath")
+  %ul.tabs
+    %li= link_to("Description", "#Description")
+    - if !@property.directions.blank?
+      %li= link_to("Directions", "#Directions")
+    - if !@property.showing_instructions.blank?
+      %li= link_to("Showing Instructions", "#ShowingInstructions")
+    - unless @property.person.profile.blank?
+      - if @property.person.properties.size > 1
+        %li= link_to("Listings", "#OwnerListings")
+    - unless @property.events.empty?
+      %li= link_to("Open Houses", "#OpenHouses")
+  = clear
+  .screen
+    .panes
+      .panel
+        = @property.body.blank? ? simple_format(@property.description) : @property.body
+      - unless @property.directions.blank?
+        .panel
+          = simple_format(@property.directions)
+      - unless @property.showing_instructions.blank?
+        .panel
+          = simple_format(@property.showing_instructions)
+      - unless @property.person.profile.blank?
+        - if @property.person.properties.size > 1
+          .panel
+            -for status in ["Active", "Pending", "Sold"]
+              -if @property.person.properties.send(status.downcase.to_sym).by_price.any?
+                %h3=status
+                %ul.list-of-properties
+                  - for property in @property.person.properties.send(status.downcase.to_sym).by_price
+                    %li
+                      - unless property.images.empty?
+                        = link_to(image_tag(property.images.first.image(:small), :style => "float: left; margin: 0 10px 10px 0;", :alt => property.formatted_address, :title => property.formatted_address), [@region, property])
+                      = link_to(property.formatted_address + display_status(property), [@region, property])                  
+                      - unless property.date_listed.blank?
+                        %br
+                        %strong Date Listed:
+                        = property.date_listed.strftime("%b %d, %Y")
+                      %br
+                      %strong Price:
+                      = number_to_currency(property.reduced_price)
+                      = clear
+      - unless @property.events.empty?
+        .panel
+          %ul.list-of-open-houses
+            - events = Event.all(:conditions => ["date_and_time >= ? and property_id = ?", Time.now, @property.id], :order => "date_and_time asc")
+            - for e in events
+              %li.open-house
+                .open-house-date
+                  - if e.date_and_time.strftime("%A, %B %d, %Y") == e.end_date_and_time.strftime("%A, %B %d, %Y")
+                    == #{e.date_and_time.strftime("%A, %B %d, %Y at %I:%M %p")} &mdash; #{e.end_date_and_time.strftime("%I:%M %p")}
+                  - else
+                    = e.date_and_time.strftime("%A, %B %d, %Y at %I:%M %p %Z")
+                    %br
+                    to
+                    = e.end_date_and_time.strftime("%A, %B %d, %Y at %I:%M %p %Z")
+                = simple_format(e.blurb)
+  - address = "#{@property.address.strip}, #{@property.city}, #{@property.state}"
+  - content_for :head do
+    = render :partial => "google_maps_includes"
+  - content_for :side_column do
+  
+    - unless @property.person.profile.blank?
+      #contact-info
+        %div
+          = image_tag(@property.person.avatar.url(:profile_thumb), :alt => "Profile photo for %s" % @property.person.name, :class => "profile-image") if @property.person.avatar_file_name
+          - if @property.person.profile
+            .small Presented By
+            #owner-name= link_to(@property.person.name, @property.person.profile)
+            #contact-info-detail
+              = simple_format(@property.person.profile.short_description)
+              - if @property.person.profile.show_dre_license
+                ==DRE License: #{@property.person.dre_license}
+                %br
+              - if @property.person.profile.show_phone
+                = @property.person.phone
+                %br
+              - if @property.person.profile.show_email
+                %br
+                = link_to("Email", "mailto:#{@property.person.email}")
+              - if @property.person.profile.show_web_address
+                %br
+                = link_to("Visit Website", @property.person.web_address)
+          = clear
+    - unless @property.images.empty?
+      .side-column-section 
+        - image = @property.images.sort_by(&:position).first
+        = link_to image_tag(image.image.url(:side_column), :title => h(image.caption.blank? ? @property.formatted_address : image.caption), :alt => h(image.caption.blank? ? @property.formatted_address : image.caption)), image.image.url(:large), :rel => "gallery", :class => "fancy"
+        = "<div class=\"caption\">#{image.caption}</div>" unless image.caption.blank?
+        = clear
+        - if @property.images_count > 1
+          .scrollable
+            .items
+              - @property.images.sort_by(&:position).each_with_index do |image, i|
+                - unless i == 0
+                  .image
+                    = link_to image_tag(image.image.url(:thumb), :title => h(image.caption.blank? ? @property.formatted_address : image.caption), :alt => h(image.caption.blank? ? @property.formatted_address : image.caption)), image.image.url(:large), :rel => "gallery", :class => "fancy"
+            = clear
+          - if @property.images_count > 6
+            = "<a class=\"prev\">&lt;</a>"
+            .navi
+            = "<a class=\"next\">&gt;</a>"
+            = "<span class=\"gray small\">#{pluralize(@property.images_count, 'image')}</span>"
+            = clear
+      - content_for :head do
+        :javascript
+          jQuery(function() {            
+          // initialize scrollable  
+          jQuery("div.scrollable").scrollable({
+          size: 4,
+          clickable: false,
+          loop: true
+          });
+          });
+    .clear
+    #map-outer{:class => "side-column-section"}
+      #google_map
+      %div= link_to "View larger map", "http://maps.google.com?q=#{u address}"
+    
+  .print-panes
+    .print-panel
+      %h2 Description
+      = @property.body.blank? ? simple_format(@property.description) : @property.body
+    - unless @property.directions.blank?
+      .print-panel
+        %h2 Directions
+        = simple_format(@property.directions)
+    - unless @property.showing_instructions.blank?
+      .print-panel
+        %h2 Showing Instructions
+        = simple_format(@property.showing_instructions)
+    - unless @property.events.empty?
+      .print-panel
+        %h2 Open Houses
+        %ul.list-of-open-houses
+          - events = Event.all(:conditions => {:property_id => @property.id})
+          - for e in events
+            %li.open-house
+              .open-house-date
+                - if e.date_and_time.strftime("%A, %B %d, %Y") == e.end_date_and_time.strftime("%A, %B %d, %Y")
+                  == #{e.date_and_time.strftime("%A, %B %d, %Y at %I:%M %p")} &mdash; #{e.end_date_and_time.strftime("%I:%M %p")}
+                - else
+                  = e.date_and_time.strftime("%A, %B %d, %Y at %I:%M %p %Z")
+                  %br
+                  to
+                  = e.end_date_and_time.strftime("%A, %B %d, %Y at %I:%M %p %Z")
+              = simple_format(e.blurb) 
+    = clear
+  = clear
+  - content_for :head do
+    = stylesheet_link_tag "/plugin_assets/justguideme/stylesheets/property_styles.css"

@@ -1,0 +1,80 @@
+= image_tag(@person.avatar.url(:medium), :alt => "Profile photo for %s" % @person.name, :class => "profile-image") if @person.avatar_file_name
+
+%div#member
+  %h1.member-name= @person.name
+  %div.member-meta
+    %dl
+      - if !@person.company.blank? and @person.profile.show_company?
+        %dt Company:
+        %dd= @person.company
+      - if !@person.title.blank? and @person.profile.show_title?
+        %dt Title:
+        %dd= @person.title
+      - if !@person.dre_license.blank? and @person.profile.show_dre_license?
+        %dt DRE License:
+        %dd= @person.dre_license
+      - if !@person.email.blank? and @person.profile.show_email?
+        %dt Email:
+        %dd= link_to(@person.email, "mailto:#{@person.email}")
+      - if !@person.phone.blank? and @person.profile.show_phone?
+        %dt Phone:
+        %dd= @person.phone
+      - if !@person.web_address.blank? and @person.profile.show_web_address?
+        %dt Website:
+        %dd= link_to(@person.web_address, @person.web_address)
+      - if !@person.address1.blank? and @person.profile.show_address1?
+        %dt Address:
+        %dd
+          = @person.address1
+          - if !@person.address2.blank? and @person.profile.show_address2?
+            %br
+            = @person.address2
+      - if !@person.city.blank? and @person.profile.show_city?
+        %dt City:
+        %dd= @person.city
+      - if !@person.state.blank? and @person.profile.show_state?
+        %dt State:
+        %dd= @person.state
+      - if !@person.zip.blank? and @person.profile.show_zip?
+        %dt Zip:
+        %dd= @person.zip
+  - unless @person.notes.blank?
+    %div.member-meta.comments
+      = simple_format @person.notes
+  = clear
+  - if @person.properties.size > 0
+    %h2 Property Listings
+    -for status in ["Active", "Pending", "Sold"]
+      %h3=status
+      %ul.recent_articles.list_of_links
+        - for property in @person.properties.send(status.downcase.to_sym).by_price
+          - if property.available
+            %li
+              = "#{link_to(property.formatted_address, [property.region, property])} #{display_status(property)}"
+  %div{:class => (@person.articles.reject{|a| !a.published}.reject{|a| !a.published_date_in_past?}.size > 0 and @person.comments_count > 0 ? "member-meta-two-column" : "member-meta-one-column")}
+    %h2= "Recent Activity" if @person.articles.reject{|a| !a.published}.reject{|a| !a.published_date_in_past?}.size > 0 or @person.comments_count > 0
+    - if @person.articles.reject{|a| !a.published}.reject{|a| !a.published_date_in_past?}.size > 0
+      .member-meta.articles
+        %h3 Latest Posts
+        %ul.recent_articles.list_of_links
+          - for article in @person.articles.reject{|a| !a.published}.reject{|a| !a.published_date_in_past?}[0..4]
+            %li
+              %h4= link_to article.title, article_path(article)
+              %span.date= article.published_at.strftime("%a, %B %d, %Y")
+            
+              %p= article.description.blank? ? h(article.blurb) : h(article.description)
+          - if @person.articles_count > 5
+            %li= link_to("More Articles", articles_path(:author => @person.id))
+= clear
+= render :partial => "shared/comment_form", :locals => { :owner => @person.profile }
+= render :partial => "side_column"
+= render :partial => "pages/sidebar"
+
+- content_for :head do
+  %style{:type => "text/css", :media => "print"}
+    div.sidebar { display: none; }
+    div#answer_form { display: none; }
+    div.member-meta dt { display: block; float: left; margin-right: 5px; width: 70px; }
+  = stylesheet_link_tag "/plugin_assets/justguideme/stylesheets/property_styles.css"
+    
+    

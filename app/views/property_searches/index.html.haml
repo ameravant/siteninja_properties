@@ -1,0 +1,24 @@
+%h1 Search Results
+%ul.list-of-properties
+  - for property in @properties
+    %li
+      - unless property.images.empty?
+        = link_to(image_tag(property.images.first.image(:small), :style => "float: left; margin: 0px 10px 10px 0;", :alt => property.formatted_address, :title => property.formatted_address), [@region, property])
+      = link_to(property.formatted_address, [@region, property])
+      - unless property.date_listed.blank?
+        %br
+        %strong Date Listed:
+        = property.date_listed.strftime("%b %d, %Y")
+      %br
+      %strong Price:
+      = number_to_currency(property.reduced_price)
+      =display_status(property)
+      = clear
+      
+- content_for :head do
+  %style{:type => "text/css"}
+    ul.list-of-properties { margin: 0; padding: 0; }
+    ul.list-of-properties li { list-style: none; display: block; margin: 0 0 10px 0; line-height: 1.4em; }
+  = stylesheet_link_tag "/plugin_assets/justguideme/stylesheets/property_styles.css"
+  
+= render :partial => "pages/sidebar"

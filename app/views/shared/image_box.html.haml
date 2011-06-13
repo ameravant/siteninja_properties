@@ -1,0 +1,44 @@
+- if @article
+  - owner = @article
+- elsif @event
+  - owner = @event
+- elsif @link
+  - owner = @link
+- elsif @product
+  - owner = @product
+-elsif @menu
+  - owner = @menu.navigatable
+-elsif @owner
+  - owner = @owner
+- else
+  - owner = @page
+- unless owner.images.empty?
+  .images 
+    - image = owner.images.sort_by(&:position).first
+    = link_to image_tag(image.image.url(:medium)), image.image.url(:large), :rel => "gallery", :title => h(image.caption), :class => "fancy"
+    = "<div class=\"caption\">#{image.caption}</div>" unless image.caption.blank?
+    = clear
+    - if owner.images_count > 1
+      .scrollable
+        .items
+          - owner.images.sort_by(&:position).each_with_index do |image, i|
+            - unless i == 0
+              .image
+                = link_to image_tag(image.image.url(:thumb)), image.image.url(:large), :rel => "gallery", :title => h(image.caption), :class => "fancy"
+        = clear
+      - if owner.images_count > 5
+        = "<a class=\"prev\">&lt;</a>"
+        .navi
+        = "<a class=\"next\">&gt;</a>"
+        = "<span class=\"gray small\">#{pluralize(owner.images_count, 'image')}</span>"
+        = clear
+  - content_for :head do
+    :javascript
+      jQuery(function() {            
+      // initialize scrollable  
+      jQuery("div.scrollable").scrollable({
+      size: 4,
+      clickable: false,
+      loop: true
+      });
+      });

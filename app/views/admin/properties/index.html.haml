@@ -1,0 +1,31 @@
+- content_for :meta_title do
+  Properties
+%h1= large_icon('Home') + ' ' + yield(:meta_title).strip
+
+%div.box
+  / .float-right= render :partial => "/shared/search"
+  %span.hmenu
+    = icon "Plus", new_admin_property_path
+    = link_to "Add a Property", new_admin_property_path
+  = clear
+  
+%table.full-width
+  %tr
+    %th Location
+    %th Open Houses
+    %th Images
+    %th Options
+  - for property in @properties
+    %tr[property]{ :class => "#{property.sold? ? "sold" : "available"}" }
+      %td= link_to("#{property.address}, #{property.city}, #{property.state} #{property.zip}", edit_admin_property_path(property))
+      %td= link_to("#{pluralize(property.events.size, "open house")}", admin_property_events_path(property))
+      %td= link_to("#{property.images.size} images", admin_property_images_path(property))
+      %td
+        = feature_icon_select(property, property.title) if current_user.has_role("Admin")
+        = icon "Write", edit_admin_property_path(property)
+        = trash_icon(property, admin_property_path(property), "#{property.address}")
+        
+- content_for :head do
+  %style{ :type => "text/css" }
+    tr.sold { background: #FFCFD7; }
+    tr.available { background: #E6FFCF; }

@@ -1,0 +1,176 @@
+!!! Traditional
+%html{html_attrs('en')}
+  %head
+    %meta{'http-equiv' => "Content-type", :content => "text/html; charset=utf-8"}
+    = javascript_include_tag :defaults
+    - address = "#{@property.address.strip}, #{@property.city}, #{@property.state}"
+    ==<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=#{ @cms_config["#{'development_' if Rails.env.development?}keys"]['google_maps'] }" type="text/javascript"></script>
+    :javascript
+      Event.observe(window, "load", function() {
+      if (GBrowserIsCompatible()) {
+      var map = new GMap2($("google_map"));
+      map.addControl(new GSmallMapControl());
+      // map.addControl(new GOverviewMapControl());
+      // map.addControl(new GMapTypeControl());
+      map.setMapType(G_NORMAL_MAP);
+      var geocoder = new GClientGeocoder();
+      var myLatLon = geocoder.getLatLng(
+      "#{address}", function(point) {
+      if (point) map.setCenter(point, 15);
+      if (point) map.addOverlay(new GMarker(point));
+      }
+      );
+      }
+      });
+      Event.observe(window, "unload", GUnload)
+    = stylesheet_link_tag "/plugin_assets/justguideme/stylesheets/print.css"
+    %script{:type => "text/javascript", :defer => "defer"}
+      function printpage() {
+      window.print();
+      window.close();
+      }
+    %style{:type => "text/css"}
+      a { color: #D0122A; }
+      div#side-column { width: 30%; float: right; margin: 0 0 0 10px; border-left: 1px solid #999; padding-left: 10px; }
+      div.panes { border: 1px solid #999; background: #fff; padding: 10px; }
+      label { display: block; font-size: 1.3em; line-height: 2em; margin: 10px 0 0; color: #333; }
+      label.inline { display: inline; }
+      label:hover { background: none !important; color: #999; }
+      input { font-size: 1.3em; }
+      ul.templates { list-style: none; width: 740px; height: 365px; overflow: auto; margin: 10px 0; padding: 0; text-transform: uppercase; font-size: .7em; border-bottom: 1px solid #6D869F; border-top: 1px solid #6D869F; background: #B5CADF; }
+      ul.templates li { float: left; padding: 10px; text-align: center; width: 100px; border-bottom: 1px solid #1D4267; }
+      ul.templates label { display: inline; float: none; width: inherit; }
+      div.panes { color: #222; }
+      div.panes h2 { color: #222; }
+      div.panes p { margin: 0; padding: .5em 0 1.5em; }
+      div#map-outer { width: 100%; }
+      div#google_map { width: 100%; height: 200px; }
+      div#property-price { margin: 0 0 8px; }
+      div#property-price #price { font-size: 1.4em; }
+      div#property-price .strikethrough { text-decoration: line-through; color: #999; }
+      span#main-address { font-size: 1.2em; font-weight: bold; }
+      address { font-style: normal; line-height: 1em; margin: 0 0 8px; }
+      h1 { padding-bottom: 10px; }
+      span.price { color: #3F9200; font-weight: bold; }
+      div#owner-name { font-size: 1.2em; font-weight: bold; margin-bottom: 8px; }
+      div#contact-info, div.images { line-height: 1.4em; margin-bottom: 10px; }
+      div#contact-info-detail { font-size: .85em; }
+      div.panel h3 { margin: 0; padding: .5em 0 1.5em; }
+      ul.list-of-properties, ul.list-of-open-houses { margin: 0; padding: 0; }
+      ul.list-of-properties li, ul.list-of-open-houses li { list-style: none; display: block; margin: 0 0 10px 0; line-height: 1.4em; }
+      div.open-house-date { font-weight: bold; color: #325D95; }
+      ul.list-of-open-houses p { margin: 0; padding: 4px 0 6px; font-size: .85em; }
+      div#primary-info.property-sold { background: #FFCFD7 !important; }
+      span.sold { font-weight: bold; color: #D6343A; font-size: 1.4em; }
+      div.images { margin-top: 0; }
+      ul.tabs { display: none; }
+      div.pane { display: none; }
+      div#login-box { display: none; }
+      div#pre-content-outer { display: none; }
+      div#main-column { float: left; width: 66% }
+      div.print-panes { display: block; font-size: .8em; line-height: 1.4em; }
+      div.screen { display: none; }
+      img#main-side-column-image { width: 100%; text-align: center; margin: 0 0 10px 0; }
+      div#footer { font-size: .8em; }
+      div#contact-info h2 { margin: 0; padding: 0; font-size: 1.2em; }
+      ==.profile-image { float: right; margin: 0 0 5px 5px; width: 70px; }
+      ==.print { height: 16px; line-height: 18px; text-decoration: none; font-weight: bold; float: right; display: block; margin-bottom: 5px; font-size: 16px; background: transparent url('http://www.site-ninja.com/plugin_assets/siteninja_core/images/icons/gray/16x16/Printer.png') no-repeat left center; padding-left: 20px; vertical-alignment: middle; }
+      ==#footer { display: block; clear: both; width: 100%; }
+      ==#logo { width: 175px; margin-bottom: 10px; }
+    %style{:type => "text/css", :media => "print"}
+      a.print { display: none; }
+      body { font-family: helvetica, tahoma, sans-serif; font-size: 10pt; margin: 0; padding: 0; }
+  %body
+    = link_to("Print", "javascript:null(0)", :onclick => "printpage()", :class => "print")
+    = image_tag("/plugin_assets/justguideme/images/justguideme-logo.png", :alt => @cms_config['website']['name'], :title => @cms_config['website']['name'], :id => "logo")
+    %div{:style => "width: 100%; clear: both;"}
+    #side-column
+      - unless @property.person.profile.blank?
+        #contact-info
+          %div
+            = image_tag(@property.person.avatar.url(:profile_thumb), :alt => "Profile photo for %s" % @property.person.name, :class => "profile-image") if @property.person.avatar_file_name
+            - if @property.person.profile
+              .small Presented By
+              #owner-name= @property.person.name
+              #contact-info-detail
+                = simple_format(@property.person.profile.short_description)
+                - if @property.person.profile.show_dre_license
+                  ==DRE License: #{@property.person.dre_license}
+                  %br
+                - if @property.person.profile.show_phone
+                  = @property.person.phone
+                  %br
+                - if @property.person.profile.show_email
+                  = link_to(@property.person.email, @property.person.email)
+                  %br
+                - if @property.person.profile.show_web_address
+                  = link_to(@property.person.web_address, @property.person.web_address)
+                  %br
+            = clear
+        - unless @property.images.empty?
+          .side-column-section 
+            - image = @property.images.sort_by(&:position).first
+            = image_tag(image.image.url(:large), :alt => h(image.caption.blank? ? @property.formatted_address : image.caption), :id => "main-side-column-image")
+            = "<div class=\"caption\">#{image.caption}</div>" unless image.caption.blank?
+            = clear
+
+        #map-outer.side-column-section
+          #google_map
+    #main-column
+      #primary-info{:class => (@property.sold? ? "property-sold" : "property-available")}
+        %address
+          %span#main-address= @property.address + ", "
+          == #{@property.city}, #{@property.state} #{@property.zip}
+        #property-price
+          #price
+            - if @property.sold?
+              %span.sold Sold
+              %span.strikethrough= number_to_currency(@property.reduced_price)
+            - else
+              - if @property.reduced_price != @property.asking_price
+                %span.price= number_to_currency(@property.reduced_price)
+                %span.strikethrough= number_to_currency(@property.asking_price)
+              - else
+                %span.price= number_to_currency(@property.asking_price)
+            =display_status(@property)
+        - unless @property.beds_count.blank? and @property.baths_count.blank?
+          #property-size
+            = pluralize(@property.beds_count, "Bed")
+            |
+            = pluralize(@property.baths_count, "Bath")
+
+      = clear
+
+      .print-panes
+        .print-panel
+          %h2 Description
+          = @property.body.blank? ? simple_format(@property.description) : @property.body
+        - unless @property.directions.blank?
+          .print-panel
+            %h2 Directions
+            = simple_format(@property.directions)
+        - unless @property.showing_instructions.blank?
+          .print-panel
+            %h2 Showing Instructions
+            = simple_format(@property.showing_instructions)
+        - unless @property.events.empty?
+          .print-panel
+            %h2 Open Houses
+            %ul.list-of-open-houses
+              - events = Event.all(:conditions => {:property_id => @property.id})
+              - for e in events
+                %li.open-house
+                  .open-house-date
+                    - if e.date_and_time.strftime("%A, %B %d, %Y") == e.end_date_and_time.strftime("%A, %B %d, %Y")
+                      == #{e.date_and_time.strftime("%A, %B %d, %Y at %I:%M %p")} &mdash; #{e.end_date_and_time.strftime("%I:%M %p")}
+                    - else
+                      = e.date_and_time.strftime("%A, %B %d, %Y at %I:%M %p %Z")
+                      %br
+                      to
+                      = e.end_date_and_time.strftime("%A, %B %d, %Y at %I:%M %p %Z")
+                  = simple_format(e.blurb) 
+        = clear
+        = clear
+%div{:style => "clear: both;"}
+#footer
+  = @settings.footer_text.gsub('#YEAR#', Date.today.year.to_s)
