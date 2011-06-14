@@ -38,8 +38,7 @@ class Admin::PropertiesController < AdminController
   end
   
   def new
-    @property = Property.new
-    @property.events.build    
+    @property = Property.new    
   end
   
   def destroy

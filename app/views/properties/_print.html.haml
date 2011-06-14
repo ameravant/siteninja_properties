@@ -82,7 +82,10 @@
       body { font-family: helvetica, tahoma, sans-serif; font-size: 10pt; margin: 0; padding: 0; }
   %body
     = link_to("Print", "javascript:null(0)", :onclick => "printpage()", :class => "print")
-    = image_tag(@settings.logo(:original), :alt => @cms_config['website']['name'], :title => @cms_config['website']['name'], :id => "logo")
+    - if !@settings.logo_file_name.blank?
+      = image_tag(@settings.logo(:original), :alt => @cms_config['website']['name'], :title => @cms_config['website']['name'], :id => "logo")
+    - else
+      %h1= @cms_config['website']['name']
     %div{:style => "width: 100%; clear: both;"}
     #side-column
       - unless @property.person.profile.blank?
@@ -153,23 +156,6 @@
           .print-panel
             %h2 Showing Instructions
             = simple_format(@property.showing_instructions)
-        - unless @property.events.empty?
-          .print-panel
-            %h2 Open Houses
-            %ul.list-of-open-houses
-              - events = Event.all(:conditions => {:property_id => @property.id})
-              - for e in events
-                %li.open-house
-                  .open-house-date
-                    - if e.date_and_time.strftime("%A, %B %d, %Y") == e.end_date_and_time.strftime("%A, %B %d, %Y")
-                      == #{e.date_and_time.strftime("%A, %B %d, %Y at %I:%M %p")} &mdash; #{e.end_date_and_time.strftime("%I:%M %p")}
-                    - else
-                      = e.date_and_time.strftime("%A, %B %d, %Y at %I:%M %p %Z")
-                      %br
-                      to
-                      = e.end_date_and_time.strftime("%A, %B %d, %Y at %I:%M %p %Z")
-                  = simple_format(e.blurb) 
-        = clear
         = clear
 %div{:style => "clear: both;"}
 #footer

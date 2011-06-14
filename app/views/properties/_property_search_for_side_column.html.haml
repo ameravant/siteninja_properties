@@ -1,20 +1,15 @@
 - content_for :side_column do
   #home-property-search-outer
     #home-property-search-inner
-      %h2 Find a <span>Home</span>
+      %h1 Find a <span>Home</span>
       - form_tag("/property_searches", :method => "get", :id => "search_form_home") do
         %fieldset
           = select :search, :region_id, Region.all.sort_by(&:title).collect {|r| [r.title, r.id]}, :include_blank => "Select a Neighborhood", :style => "width: 275px;"
+          %br
           = select :search, :property_type_id, PropertyType.all.sort_by(&:title).collect {|pt| [pt.title, pt.id]}, :include_blank => "Select a Property Type"
+          %br
           = select_tag :min_price, options_for_select([["$0", "0"], ["$50,000", "50000"], ["$100,000", "100000"], ["$250,000", "250000"], ["$500,000", "500000"], ["$750,000", "750000"], ["$1,000,000", "1000000"], ["$2,500,000", "2500000"], ["$5,000,000", "5000000"], ["$7,500,000", "7500000"]])
           &mdash;
           = select_tag :max_price, options_for_select([["$50,000", "50000"], ["$100,000", "100000"], ["$250,000", "250000"], ["$500,000", "500000"], ["$750,000", "750000"], ["$1,000,000", "1000000"], ["$2,500,000", "2500000"], ["$5,000,000", "5000000"], ["$7,500,000", "7500000"], ["$7,500,001+", "9999999999999999999"]], ["$2,500,000", "2500000"])
+          %br
           = submit_tag "Search"
-      
-- content_for :head do
-  %style{:type => "text/css"}
-    div#home-property-search-outer { background: #EEECE2; border-bottom: #9E2E2E solid 1px; }
-    div#home-property-search-inner { width: 880px; padding: 10px 10px 10px; margin: 0 auto; text-align: left; height: 69px; }
-    div#home-property-search-inner h2 { line-height: 22px; padding: 21px 0 0 65px; color: #000; }
-    div#home-property-search-inner h2 span { color: #CD2027; }
-    

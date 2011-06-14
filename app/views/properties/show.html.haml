@@ -10,8 +10,6 @@
       // setup ul.tabs to work as tabs for each div directly under div.panes 
       jQuery("ul.tabs").tabs("div.panes > div.panel"); 
       });
-    %style{:type => "text/css", :media => "screen"}
-
     %style{:type => "text/css", :media => "print"}
       div.panes { border: 1px solid #999; background: #fff; padding: 10px; }
       label { display: block; font-size: 1.3em; line-height: 2em; margin: 10px 0 0; color: #333; }
@@ -88,8 +86,6 @@
     - unless @property.person.profile.blank?
       - if @property.person.properties.size > 1
         %li= link_to("Listings", "#OwnerListings")
-    - unless @property.events.empty?
-      %li= link_to("Open Houses", "#OpenHouses")
   = clear
   .screen
     .panes
@@ -121,21 +117,6 @@
                       %strong Price:
                       = number_to_currency(property.reduced_price)
                       = clear
-      - unless @property.events.empty?
-        .panel
-          %ul.list-of-open-houses
-            - events = Event.all(:conditions => ["date_and_time >= ? and property_id = ?", Time.now, @property.id], :order => "date_and_time asc")
-            - for e in events
-              %li.open-house
-                .open-house-date
-                  - if e.date_and_time.strftime("%A, %B %d, %Y") == e.end_date_and_time.strftime("%A, %B %d, %Y")
-                    == #{e.date_and_time.strftime("%A, %B %d, %Y at %I:%M %p")} &mdash; #{e.end_date_and_time.strftime("%I:%M %p")}
-                  - else
-                    = e.date_and_time.strftime("%A, %B %d, %Y at %I:%M %p %Z")
-                    %br
-                    to
-                    = e.end_date_and_time.strftime("%A, %B %d, %Y at %I:%M %p %Z")
-                = simple_format(e.blurb)
   - address = "#{@property.address.strip}, #{@property.city}, #{@property.state}"
   - content_for :head do
     = render :partial => "google_maps_includes"
@@ -210,22 +191,6 @@
       .print-panel
         %h2 Showing Instructions
         = simple_format(@property.showing_instructions)
-    - unless @property.events.empty?
-      .print-panel
-        %h2 Open Houses
-        %ul.list-of-open-houses
-          - events = Event.all(:conditions => {:property_id => @property.id})
-          - for e in events
-            %li.open-house
-              .open-house-date
-                - if e.date_and_time.strftime("%A, %B %d, %Y") == e.end_date_and_time.strftime("%A, %B %d, %Y")
-                  == #{e.date_and_time.strftime("%A, %B %d, %Y at %I:%M %p")} &mdash; #{e.end_date_and_time.strftime("%I:%M %p")}
-                - else
-                  = e.date_and_time.strftime("%A, %B %d, %Y at %I:%M %p %Z")
-                  %br
-                  to
-                  = e.end_date_and_time.strftime("%A, %B %d, %Y at %I:%M %p %Z")
-              = simple_format(e.blurb) 
     = clear
   = clear
   - content_for :head do

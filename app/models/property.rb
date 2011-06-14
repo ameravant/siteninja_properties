@@ -1,13 +1,11 @@
 class Property < ActiveRecord::Base
   belongs_to :region
   belongs_to :person
-  has_many :events, :dependent => :destroy
   belongs_to :property_type
   has_many :images, :as => :viewable, :dependent => :destroy
   has_many :features, :as => :featurable, :dependent => :destroy
   before_create :set_reduced_price
   before_update :set_reduced_price
-  validates_associated :events
   validates_presence_of :region_id
   validates_presence_of :property_type_id
   validates_presence_of :address
