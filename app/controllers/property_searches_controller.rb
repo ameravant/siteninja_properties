@@ -13,15 +13,6 @@ class PropertySearchesController < ApplicationController
     end
   end
   
-  def create
-    @search = PropertySearch.new(params[:property_search])
-    if @search.save
-      redirect_to :action => 'show', :id => @search.id
-    else
-      render :new
-    end
-  end
-  
   def get_page
     @page = Page.find_by_permalink("regions")
     @side_column = @page.column_id

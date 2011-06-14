@@ -23,7 +23,7 @@
       }
       });
       Event.observe(window, "unload", GUnload)
-    = stylesheet_link_tag "/plugin_assets/justguideme/stylesheets/print.css"
+    = stylesheet_link_tag "/plugin_assets/siteninja_properties/stylesheets/print.css"
     %script{:type => "text/javascript", :defer => "defer"}
       function printpage() {
       window.print();
@@ -82,7 +82,7 @@
       body { font-family: helvetica, tahoma, sans-serif; font-size: 10pt; margin: 0; padding: 0; }
   %body
     = link_to("Print", "javascript:null(0)", :onclick => "printpage()", :class => "print")
-    = image_tag("/plugin_assets/justguideme/images/justguideme-logo.png", :alt => @cms_config['website']['name'], :title => @cms_config['website']['name'], :id => "logo")
+    = image_tag(@settings.logo(:original), :alt => @cms_config['website']['name'], :title => @cms_config['website']['name'], :id => "logo")
     %div{:style => "width: 100%; clear: both;"}
     #side-column
       - unless @property.person.profile.blank?

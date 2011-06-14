@@ -1,14 +1,16 @@
 class CreatePropertySearches < ActiveRecord::Migration
   def self.up
-    create_table :property_searches do |t|
-      t.integer :property_type_id, :region_id
-      t.float :max_price
-      t.float :min_price
-      t.timestamps
-    end
+    search = ColumnSectionType.create(:title => "Property Search", :controller_name => "properties", :partial_name => "property_search_for_side_column")
+    c = Column.first
+    ColumnSection.create(:column_id => c.id, :column_section_type_id => search.id, :title => "Property Search")
   end
 
   def self.down
-    drop_table :property_searches
+    search = ColumnSectionType.find_by_title("Property Search")
+    sections = search.column_sections
+    search.destroy
+    for section in sections
+      section.destroy
+    end
   end
 end

@@ -1,4 +1,4 @@
-A person signed up to JustGuideMe. To confirm this person, <%= link_to("click here", admin_people_url)%>.
+A person signed up to <%= @cms_config['website']['name']%>. To confirm this person, <%= link_to("click here", admin_people_url)%>.
 <br />
 Name:  <%= h @profile.person.name %><br />
 Email: <%= h @profile.person.email %><br />
