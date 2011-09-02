@@ -1,4 +1,4 @@
-class Admin::PropertyTypesController < ApplicationController
+class Admin::PropertyTypesController < AdminController
   
   unloadable
   before_filter :authorization
