@@ -11,7 +11,6 @@ class Property < ActiveRecord::Base
   validates_presence_of :address
   validates_presence_of :city
   validates_presence_of :asking_price
-  after_update :save_events
   accepts_nested_attributes_for :images
   named_scope :pending, {:conditions => "status = 'Pending'"}
   named_scope :sold, {:conditions => "status = 'Sold'"}
@@ -56,9 +55,4 @@ class Property < ActiveRecord::Base
    end
   end
 
-  def save_events
-   events.each do |event|
-     event.save(false)
-   end
-  end
 end
