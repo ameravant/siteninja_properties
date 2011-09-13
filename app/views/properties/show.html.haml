@@ -10,49 +10,6 @@
       // setup ul.tabs to work as tabs for each div directly under div.panes 
       jQuery("ul.tabs").tabs("div.panes > div.panel"); 
       });
-    %style{:type => "text/css", :media => "print"}
-      div.panes { border: 1px solid #999; background: #fff; padding: 10px; }
-      label { display: block; font-size: 1.3em; line-height: 2em; margin: 10px 0 0; color: #333; }
-      label.inline { display: inline; }
-      label:hover { background: none !important; color: #999; }
-      input { font-size: 1.3em; }
-      ul.templates { list-style: none; width: 740px; height: 365px; overflow: auto; margin: 10px 0; padding: 0; text-transform: uppercase; font-size: .7em; border-bottom: 1px solid #6D869F; border-top: 1px solid #6D869F; background: #B5CADF; }
-      ul.templates li { float: left; padding: 10px; text-align: center; width: 100px; border-bottom: 1px solid #1D4267; }
-      ul.templates label { display: inline; float: none; width: inherit; }
-      div.panes { color: #222; }
-      div.panes h2 { color: #222; }
-      div.panes p { margin: 0; padding: .5em 0 1.5em; }
-      div#map-outer { width: 278px; padding: 10px; border: 1px solid #999; background: #F3F1EA; }
-      div#google_map { width: 278px; height: 250px; }
-      div.sidebar .images { width: 278px; text-align: left; }
-      div.sidebar .scrollable { width: 278px; }
-      div#property-price { margin: 0 0 8px; }
-      div#property-price #price { font-size: 1.4em; }
-      div#property-price .strikethrough { text-decoration: line-through; color: #999; }
-      span#main-address { font-size: 1.2em; font-weight: bold; }
-      address { font-style: normal; line-height: 1em; margin: 0 0 8px; }
-      h1 { padding-bottom: 10px; }
-      div#primary-info, #contact-info, div.images { border: 1px solid #999; background: #FFFCCF; padding: 10px; margin-bottom: 10px; }
-      span.price { color: #3F9200; font-weight: bold; }
-      div#owner-name { font-size: 1.2em; font-weight: bold; margin-bottom: 8px; }
-      div#contact-info, div.images { background: #F3F1EA; line-height: 1.4em; }
-      div#contact-info-detail { font-size: .85em; }
-      div.panel h3 { margin: 0; padding: .5em 0 1.5em; }
-      ul.list-of-properties, ul.list-of-open-houses { margin: 0; padding: 0; }
-      ul.list-of-properties li, ul.list-of-open-houses li { list-style: none; display: block; margin: 0 0 10px 0; line-height: 1.4em; }
-      div.open-house-date { font-weight: bold; color: #325D95; }
-      ul.list-of-open-houses p { margin: 0; padding: 4px 0 6px; font-size: .85em; }
-      div#primary-info.property-sold { background: #FFCFD7 !important; }
-      span.sold { font-weight: bold; color: #D6343A; font-size: 1.4em; }
-      div.images { margin-top: 0; }
-      ul.tabs { display: none; }
-      div.pane { display: none; }
-      div#login-box { display: none; }
-      div#pre-content-outer { display: none; }
-      div#main-column { 450px; float: left; }
-      div#side-column { width: 250px; float: right; display: block; }
-      div.print-panes { display: block; width: 450px; float: left; font-size: .8em; line-height: 1.4em; }
-      div.screen { display: none; }
   - content_for :side_column do
     = link_to("Print", "javascript:void(0)", :onclick => "window.open ('#{property_path(@property)}?print=true','printproperty','menubar=0,width=700,height=500');", :class => "print")
     = clear
@@ -195,3 +152,4 @@
   = clear
   - content_for :head do
     = stylesheet_link_tag "/plugin_assets/siteninja_properties/stylesheets/property_styles.css"
+    %link{:href => "/plugin_assets/siteninja_properties/stylesheets/property_print_styles.css", :media => "print", :rel => "stylesheet", :type => "text/css"}
