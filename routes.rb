@@ -5,7 +5,7 @@ resources :profiles, :collection => { :forgot_password => :any }, :has_many => :
 namespace :admin do |admin|
   admin.resources :regions, :has_many => { :features, :menus } do |region|
     region.resources :menus
-    region.resources :images, :member => { :reorder => :put }, :collection => { :reorder => :put }
+    region.resources :images, :member => { :reorder => :put }, :collection => { :reorder => :put, :add_multiple => :get }
     region.resources :properties
   end
   admin.resources :properties, :has_many => { :features, :images } do |property|
