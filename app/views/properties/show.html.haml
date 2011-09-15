@@ -59,22 +59,11 @@
         - if @property.person.properties.size > 1
           .panel
             -for status in ["Active", "Pending", "Sold"]
-              -if @property.person.properties.send(status.downcase.to_sym).by_price.any?
-                %h3=status
-                %ul.list-of-properties
-                  - for property in @property.person.properties.send(status.downcase.to_sym).by_price
-                    %li
-                      - unless property.images.empty?
-                        = link_to(image_tag(property.images.first.image(:small), :style => "float: left; margin: 0 10px 10px 0;", :alt => property.formatted_address, :title => property.formatted_address), [@region, property])
-                      = link_to(property.formatted_address + display_status(property), [@region, property])                  
-                      - unless property.date_listed.blank?
-                        %br
-                        %strong Date Listed:
-                        = property.date_listed.strftime("%b %d, %Y")
-                      %br
-                      %strong Price:
-                      = number_to_currency(property.reduced_price)
-                      = clear
+              - unless eval("@#{status.downcase}_properties").empty?
+                - unless @property.person.properties.send("pending").by_price.any? and @property.person.properties.send("sold").by_price.any?
+                  %h2= status
+                =render :partial => "properties/property_list", :locals => {:region => @region, :properties => @property.person.properties.send(status.downcase.to_sym).by_price}
+
   - address = "#{@property.address.strip}, #{@property.city}, #{@property.state}"
   - content_for :head do
     = render :partial => "google_maps_includes"
