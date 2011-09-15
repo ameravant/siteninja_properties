@@ -13,6 +13,7 @@
   - content_for :side_column do
     = link_to("Print", "javascript:void(0)", :onclick => "window.open ('#{property_path(@property)}?print=true','printproperty','menubar=0,width=700,height=500');", :class => "print")
     = clear
+  = render :partial => "shared/embed_slideshow"
   #primary-info{:class => (@property.sold? ? "property-sold" : "property-available")}
     %address
       %span#main-address= @property.address + ", "
@@ -107,20 +108,6 @@
         = link_to image_tag(image.image.url(:side_column), :title => h(image.caption.blank? ? @property.formatted_address : image.caption), :alt => h(image.caption.blank? ? @property.formatted_address : image.caption)), image.image.url(:large), :rel => "gallery", :class => "fancy"
         = "<div class=\"caption\">#{image.caption}</div>" unless image.caption.blank?
         = clear
-        - if @property.images_count > 1
-          .scrollable
-            .items
-              - @property.images.sort_by(&:position).each_with_index do |image, i|
-                - unless i == 0
-                  .image
-                    = link_to image_tag(image.image.url(:thumb), :title => h(image.caption.blank? ? @property.formatted_address : image.caption), :alt => h(image.caption.blank? ? @property.formatted_address : image.caption)), image.image.url(:large), :rel => "gallery", :class => "fancy"
-            = clear
-          - if @property.images_count > 6
-            = "<a class=\"prev\">&lt;</a>"
-            .navi
-            = "<a class=\"next\">&gt;</a>"
-            = "<span class=\"gray small\">#{pluralize(@property.images_count, 'image')}</span>"
-            = clear
       - content_for :head do
         :javascript
           jQuery(function() {            
