@@ -80,34 +80,31 @@
   - address = "#{@property.address.strip}, #{@property.city}, #{@property.state}"
   - content_for :head do
     = render :partial => "google_maps_includes"
-  - content_for :side_column do
-  
-    - unless @property.person.profile.blank?
-      #contact-info
-        %div
-          = image_tag(@property.person.avatar.url(:profile_thumb), :alt => "Profile photo for %s" % @property.person.name, :class => "profile-image") if @property.person.avatar_file_name
-          - if @property.person.profile
-            .small Presented By
-            #owner-name= link_to(@property.person.name, @property.person.profile)
-            #contact-info-detail
-              = simple_format(@property.person.profile.short_description)
-              - if @property.person.profile.show_dre_license
-                ==DRE License: #{@property.person.dre_license}
-                %br
-              - if @property.person.profile.show_phone
-                = @property.person.phone
-                %br
-              - if @property.person.profile.show_email
-                %br
-                = link_to("Email", "mailto:#{@property.person.email}")
-              - if @property.person.profile.show_web_address
-                %br
-                = link_to("Visit Website", @property.person.web_address)
-          = clear
-    .clear
+- content_for :side_column do
+  - if !@region.address.blank?
     #map-outer{:class => "side-column-section"}
       #google_map
-      %div= link_to "View larger map", "http://maps.google.com?q=#{u address}"
+      %div= link_to "View larger map", "http://maps.google.com?q=#{u @region.address}"
+    .side-column-section
+      %h2 Sales office
+      %address
+        %span#address= @region.address
+  - if !@region.phone.blank? or !@region.email.blank?
+    .side-column-section
+      %h2 Contact
+      %address
+        - if !@region.phone.blank?
+          #phone
+            %span#phone-title Phone:
+            = @region.phone
+        - if !@region.email.blank?
+          #email
+            %span#email-title Email:
+            = link_to(@region.email, "mailto:#{@region.email}")
+  - if !@region.directions.blank?
+    .side-column-section
+      %h2 Directions
+      =@region.directions
     
   .print-panes
     .print-panel
