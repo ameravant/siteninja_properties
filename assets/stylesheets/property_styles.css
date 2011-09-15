@@ -1,10 +1,10 @@
 ul.tabs { list-style: none; margin: 0; padding: 0; position: relative; top: 1px; font-size: .9em; }
 ul.tabs li { display: block; float: left; }
-ul.tabs li a { display: block; float: left; padding: 0 10px 0 10px; border: 1px solid #999; background: #F3F1EA; text-decoration: none; -webkit-border-radius: 4px 4px 0 0; -moz-border-radius: 4px 4px 0 0; color: #666; }
+ul.tabs li a { display: block; float: left; padding: 0 10px 0 10px; border: 1px solid #999; background: #003875; text-decoration: none; -webkit-border-radius: 4px 4px 0 0; -moz-border-radius: 4px 4px 0 0; color: #fff; font-weight: bold; }
 ul.tabs li a:focus { outline: none; }
-ul.tabs li a:hover { color: #D43A38 !important; background: #FFFCCF !important; }
-ul.tabs li a.current { background: #fff; border-bottom: 1px solid #fff; color: #D43A38; }
-ul.tabs li a.current:hover { background: #fff !important; color: #D43A38; }
+ul.tabs li a:hover { color: #fff !important; background: #003875 !important; }
+ul.tabs li a.current { background: #fff; border-bottom: 1px solid #fff; color: #000; }
+ul.tabs li a.current:hover { background: #fff !important; color: #D43A38 !important; }
 div.panes { border: 1px solid #999; background: #fff; padding: 10px; }
 .panel { text-align: left !important; }
 label { display: block; font-size: 1.3em; line-height: 2em; margin: 10px 0 0; color: #333; }
