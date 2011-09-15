@@ -102,22 +102,6 @@
                 %br
                 = link_to("Visit Website", @property.person.web_address)
           = clear
-    - unless @property.images.empty?
-      .side-column-section 
-        - image = @property.images.sort_by(&:position).first
-        = link_to image_tag(image.image.url(:side_column), :title => h(image.caption.blank? ? @property.formatted_address : image.caption), :alt => h(image.caption.blank? ? @property.formatted_address : image.caption)), image.image.url(:large), :rel => "gallery", :class => "fancy"
-        = "<div class=\"caption\">#{image.caption}</div>" unless image.caption.blank?
-        = clear
-      - content_for :head do
-        :javascript
-          jQuery(function() {            
-          // initialize scrollable  
-          jQuery("div.scrollable").scrollable({
-          size: 4,
-          clickable: false,
-          loop: true
-          });
-          });
     .clear
     #map-outer{:class => "side-column-section"}
       #google_map
@@ -137,6 +121,7 @@
         = simple_format(@property.showing_instructions)
     = clear
   = clear
+.clear
   - content_for :head do
     = stylesheet_link_tag "/plugin_assets/siteninja_properties/stylesheets/property_styles.css"
     %link{:href => "/plugin_assets/siteninja_properties/stylesheets/property_print_styles.css", :media => "print", :rel => "stylesheet", :type => "text/css"}
