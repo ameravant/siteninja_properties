@@ -6,7 +6,7 @@ ul.tabs li a:hover { color: #D43A38 !important; background: #FFFCCF !important; 
 ul.tabs li a.current { background: #fff; border-bottom: 1px solid #fff; color: #D43A38; }
 ul.tabs li a.current:hover { background: #fff !important; color: #D43A38; }
 div.panes { border: 1px solid #999; background: #fff; padding: 10px; }
-.panel { text-align: left; }
+.panel { text-align: left !important; }
 label { display: block; font-size: 1.3em; line-height: 2em; margin: 10px 0 0; color: #333; }
 label.inline { display: inline; }
 label:hover { background: none !important; color: #999; }
