@@ -60,7 +60,7 @@
           .panel
             -for status in ["Active", "Pending", "Sold"]
               - if @property.person.properties.send(status.downcase.to_sym).by_price.any?
-                - unless @property.person.properties.send("pending").by_price.any? and @property.person.properties.send("sold").by_price.any?
+                - if @property.person.properties.send("pending").by_price.any? and @property.person.properties.send("sold").by_price.any?
                   %h2= status
                 =render :partial => "properties/property_list", :locals => {:region => @region, :properties => @property.person.properties.send(status.downcase.to_sym).by_price}
 
