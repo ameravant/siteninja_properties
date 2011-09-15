@@ -1,19 +1,5 @@
 %h1 Search Results
-%ul.list-of-properties
-  - for property in @properties
-    %li
-      - unless property.images.empty?
-        = link_to(image_tag(property.images.first.image(:small), :style => "float: left; margin: 0px 10px 10px 0;", :alt => property.formatted_address, :title => property.formatted_address), [@region, property])
-      = link_to(property.formatted_address, [@region, property])
-      - unless property.date_listed.blank?
-        %br
-        %strong Date Listed:
-        = property.date_listed.strftime("%b %d, %Y")
-      %br
-      %strong Price:
-      = number_to_currency(property.reduced_price)
-      =display_status(property)
-      = clear
+=render :partial => "properties/property_list", :locals => {:region => @region, :properties => @properties}
       
 - content_for :head do
   %style{:type => "text/css"}
