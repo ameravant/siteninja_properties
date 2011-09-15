@@ -71,3 +71,6 @@ span.status {
 .list-of-properties td, .list-of-properties th { margin: 0; padding: 2px; }
 .list-of-properties th { border-bottom: 1px solid #ccc; }
 .list-of-properties td { vertical-align: top; border: 0; }
+
+#primary-info .spec { float: left; width: 235px; margin: 2px 5px; background: #fff; padding: 4px; font-size: .9em; font-weight: bold; }
+#primary-info .property-label { float: left; width: 100px; }
