@@ -1,10 +1,3 @@
-ul.tabs { list-style: none; margin: 0; padding: 0; position: relative; top: 1px; font-size: .9em; }
-ul.tabs li { display: block; float: left; }
-ul.tabs li a { display: block; float: left; padding: 0 10px 0 10px; border: 1px solid #999; background: #F3F1EA; text-decoration: none; -webkit-border-radius: 4px 4px 0 0; -moz-border-radius: 4px 4px 0 0; color: #666; }
-ul.tabs li a:focus { outline: none; }
-ul.tabs li a:hover { color: #D43A38 !important; background: #FFFCCF !important; }
-ul.tabs li a.current { background: #fff; border-bottom: 1px solid #fff; color: #D43A38; }
-ul.tabs li a.current:hover { background: #fff !important; color: #D43A38; }
 div.panes { border: 1px solid #999; background: #fff; padding: 10px; }
 label { display: block; font-size: 1.3em; line-height: 2em; margin: 10px 0 0; color: #333; }
 label.inline { display: inline; }
@@ -16,7 +9,7 @@ ul.templates label { display: inline; float: none; width: inherit; }
 div.panes { color: #222; }
 div.panes h2 { color: #222; }
 div.panes p { margin: 0; padding: .5em 0 1.5em; }
-div#map-outer { width: 278px; }
+div#map-outer { width: 278px; padding: 10px; border: 1px solid #999; background: #F3F1EA; }
 div#google_map { width: 278px; height: 250px; }
 div.sidebar .images { width: 278px; text-align: left; }
 div.sidebar .scrollable { width: 278px; }
@@ -27,7 +20,6 @@ span#main-address { font-size: 1.2em; font-weight: bold; }
 address { font-style: normal; line-height: 1em; margin: 0 0 8px; }
 h1 { padding-bottom: 10px; }
 div#primary-info, #contact-info, div.images { border: 1px solid #999; background: #FFFCCF; padding: 10px; margin-bottom: 10px; }
-div#contact-info { border: 1px solid #CDDBE3; border-radius: 0 0 5px 5px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); margin-bottom: 10px; padding: 10px; }
 span.price { color: #3F9200; font-weight: bold; }
 div#owner-name { font-size: 1.2em; font-weight: bold; margin-bottom: 8px; }
 div#contact-info, div.images { background: #F3F1EA; line-height: 1.4em; }
@@ -40,34 +32,11 @@ ul.list-of-open-houses p { margin: 0; padding: 4px 0 6px; font-size: .85em; }
 div#primary-info.property-sold { background: #FFCFD7 !important; }
 span.sold { font-weight: bold; color: #D6343A; font-size: 1.4em; }
 div.images { margin-top: 0; }
-div.print-panes { display: none; }
-.print { height: 16px; line-height: 14px; text-decoration: none; font-weight: bold; float: right; display: block; margin-bottom: 5px; font-size: 16px; background: transparent url('http://www.site-ninja.com/plugin_assets/siteninja_core/images/icons/gray/16x16/Printer.png') no-repeat left center; padding-left: 20px; vertical-alignment: middle; }
-
-span.sold{
-	background:red;
-	line-height:1.3em;
-}
-span.pending{
-	background:green;
-}
-#main-column #member a.auto-width span {
-	text-decoration:none;
-}
-#main-column #member .auto-width {
-	width:auto;
-}
-span.sold, span.pending{
-	padding:3px;
-	margin:5px;
-	color:#fff;
-	width:auto;
-}
-span.status {
-	float:right;
-	margin-top:20px;
-	margin-right:11.5em;
-}
-.list-of-properties { width: 100%; }
-.list-of-properties td, .list-of-properties th { margin: 0; padding: 2px; }
-.list-of-properties th { border-bottom: 1px solid #ccc; }
-.list-of-properties td { vertical-align: top; border: 0; }
+ul.tabs { display: none; }
+div.pane { display: none; }
+div#login-box { display: none; }
+div#pre-content-outer { display: none; }
+div#main-column { 450px; float: left; }
+div#side-column { width: 250px; float: right; display: block; }
+div.print-panes { display: block; width: 450px; float: left; font-size: .8em; line-height: 1.4em; }
+div.screen { display: none; }

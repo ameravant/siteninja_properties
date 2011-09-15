@@ -3,6 +3,26 @@
     %dl
       %dt.form-label= f.label :title
       %dd.form-option= f.text_field :title, :size => "44" 
+      %dt.form-label= f.label :address
+      %dd.form-option= f.text_field :address, :size => "44" 
+      %dt.form-label= f.label :phone
+      %dd.form-option= f.text_field :phone, :size => "44" 
+      %dt.form-label= f.label :email
+      %dd.form-option= f.text_field :email, :size => "44" 
+      %dt.form-label= f.label :directions
+      %dd.form-option= f.text_area :directions, :size => "44x5" 
       %dt.form-label= f.label :description
       %dd.form-option= f.text_area :description, :size => "85x35", :class => "mceEditor"
+      %dt.form-label= f.label :tab_1_title
+      %dd.form-option= f.text_field :tab_1_title, :size => "44" 
+      %dt.form-label= f.label :tab_1_description
+      %dd.form-option= f.text_area :tab_1_description, :size => "85x35", :class => "mceEditor"
+      %dt.form-label= f.label :tab_2_title
+      %dd.form-option= f.text_field :tab_2_title, :size => "44" 
+      %dt.form-label= f.label :tab_2_description
+      %dd.form-option= f.text_area :tab_2_description, :size => "85x35", :class => "mceEditor"
+      %dt.form-label= f.label :tab_3_title
+      %dd.form-option= f.text_field :tab_3_title, :size => "44" 
+      %dt.form-label= f.label :tab_3_description
+      %dd.form-option= f.text_area :tab_3_description, :size => "85x35", :class => "mceEditor"
     = f.submit

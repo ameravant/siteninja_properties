@@ -25,10 +25,18 @@
         %dd.form-option= f.text_field :beds_count, :size => "44" 
         %dt.form-label= f.label :baths_count
         %dd.form-option= f.text_field :baths_count, :size => "44" 
+        %dt.form-label= f.label :garage_size
+        %dd.form-option= f.text_field :garage_size, :size => "44"
+        %dt.form-label= f.label :stories
+        %dd.form-option= f.text_field :stories, :size => "44"
+        %dt.form-label= f.label :payment
+        %dd.form-option= f.text_field :payment, :size => "44"   
+        %dt.form-label= f.label :size
+        %dd.form-option= f.text_field :size, :size => "44"   
     #property-other
       %h3 Other Details
       %dl
-        %dt.form-label= f.label :region_id
+        %dt.form-label= f.label :region_id, "Community"
         %dd.form-option= f.select :region_id, Region.all.sort_by(&:title).collect {|r| [r.title, r.id]}, {:include_blank => "Select a region"}
         %dt.form-label= f.label :property_type_id
         %dd.form-option= f.select :property_type_id, PropertyType.all.sort_by(&:title).collect {|r| [r.title, r.id]}, {:include_blank => "Select a property type"}

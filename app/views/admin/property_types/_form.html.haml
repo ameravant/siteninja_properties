@@ -3,6 +3,8 @@
     %dl
       %dt.form-label= f.label :title
       %dd.form-option= f.text_field :title, :size => "44" 
+      %dt.form-label= f.label :region_id, "Community"
+      %dd.form-option= f.select :region_id, Region.all.sort_by(&:title).collect {|r| [r.title, r.id]}, {:include_blank => "Select a region"} 
       %dt.form-label= f.label :description
       %dd.form-option= f.text_area :description, :size => "85x35", :class => "mceEditor"
     = f.submit

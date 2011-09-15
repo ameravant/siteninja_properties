@@ -1,15 +1,27 @@
-%ul.list-of-properties
+%table.list-of-properties
+  %tr.list-of-properties-header
+    %th#property-images
+    %th#property-plans Plan
+    %th#property-size Size
+    %th#property-stories Stories
+    %th#property-rooms Rooms
+    %th#property-priced-from Priced From
+    %th#property-payment Payment
   - for property in properties
-    %li
-      - unless property.images.empty?
-        = image_tag(property.images.first.image(:small), :style => "float: left; margin: 0 10px 10px 0;", :alt => property.formatted_address, :title => property.formatted_address)
-      = link_to(property.formatted_address, [region, property])
-      - unless property.date_listed.blank?
-        %br
-        %strong Date Listed:
-        = property.date_listed.strftime("%b %d, %Y")
-      %br
-      %strong Price:
-      = number_to_currency(property.reduced_price)
-      =display_status(property)
-      = clear
+    %tr
+      %td
+        - unless property.images.empty?
+          = link_to(image_tag(property.images.first.image(:small), :style => "float: left; margin: 0 10px 10px 0;", :alt => property.formatted_address, :title => property.formatted_address), [region, property])
+      %td
+        = link_to(property.property_type.title, [region, property])
+      %td= property.size
+      %td= property.stories
+      %td
+        - unless property.beds_count.blank?
+          %div= pluralize(property.beds_count, "bedrooms")
+        - unless property.baths_count.blank?
+          %div= pluralize(property.baths_count, "bath")
+        - unless property.garage_size.blank?
+          %div= property.garage_size
+      %td= number_to_currency(property.reduced_price)
+      %td= property.payment

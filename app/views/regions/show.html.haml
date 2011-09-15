@@ -1,15 +1,71 @@
 %h1= @region.title
-= @region.description
--for status in ["Active", "Pending", "Sold"]
-  %h2= status
-  =render :partial => "properties/property_list", :locals => {:region => @region, :properties => instance_variable_get("@#{status.downcase}_properties")}
-      
-- content_for :head do
-  %style{:type => "text/css"}
-    ul.list-of-properties { margin: 0; padding: 0; }
-    ul.list-of-properties li { list-style: none; display: block; margin: 0 0 10px 0; line-height: 1.4em; }
-    
 
-= render :partial => "pages/sidebar"
+= ninja_parse(@region.description)
+%ul.tabs
+  %li= link_to("Move-In Ready", "#properties")
+  - if !@region.tab_1_description.blank?
+    %li= link_to(@region.tab_1_title, "##{path_safe(@region.tab_1_title)}")
+  - if !@region.tab_2_description.blank?
+    %li= link_to(@region.tab_2_title, "##{path_safe(@region.tab_2_title)}")
+  - if !@region.tab_3_description.blank?
+    %li= link_to(@region.tab_3_title, "##{path_safe(@region.tab_3_title)}")
+= clear
+.panes
+  .panel
+    -for status in ["Active", "Pending", "Sold"]
+      - unless eval("@#{status.downcase}_properties").empty?
+        - unless @pending_properties.empty? and @sold_properties.empty?
+          %h2= status
+        =render :partial => "properties/property_list", :locals => {:region => @region, :properties => instance_variable_get("@#{status.downcase}_properties")}
+
+  - if !@region.tab_1_description.blank?
+    .panel
+      = ninja_parse(@region.tab_1_description)
+  - if !@region.tab_2_description.blank?
+    .panel
+      = ninja_parse(@region.tab_2_description)
+  - if !@region.tab_3_description.blank?
+    .panel
+      = ninja_parse(@region.tab_3_description)
+  
 - content_for :head do
   = stylesheet_link_tag "/plugin_assets/siteninja_properties/stylesheets/property_styles.css"
+  test
+  :javascript
+    jQuery(function() { 
+    // setup ul.tabs to work as tabs for each div directly under div.panes 
+    jQuery("ul.tabs").tabs("div.panes > div.panel"); 
+    });
+  = render :partial => "google_maps_includes"
+- content_for :side_column do
+  - if !@region.address.blank?
+    #map-outer{:class => "side-column-section"}
+      #google_map
+      %div= link_to "View larger map", "http://maps.google.com?q=#{u @region.address}"
+    .side-column-section
+      %h2 Sales office
+      %address
+        %span#address= @region.address
+  - if !@region.phone.blank? or !@region.email.blank?
+    .side-column-section
+      %h2 Contact
+      %address
+        - if !@region.phone.blank?
+          #phone
+            %span#phone-title Phone:
+            = @region.phone
+        - if !@region.email.blank?
+          #email
+            %span#email-title Email:
+            = link_to(@region.email, "mailto:#{@region.email}")
+  - if !@region.directions.blank?
+    .side-column-section
+      %h2 Directions
+      =@region.directions
+  - if !@property_types.empty?
+    .side-column-section
+      %h2 Plans
+      %ul.list-of-plans
+        - for plan in @property_types
+          %li= link_to(plan.title, plan)
+        

@@ -12,10 +12,13 @@
 %table.full-width
   %tr
     %th Location
+    %th Images
     %th Options
   - for property_type in @property_types
     %tr{ :class => cycle('odd','even') }
       %td= link_to(property_type.title, edit_admin_property_type_path(property_type))
+      %td= link_to("%d images" % property_type.images_count, [:admin, property_type, :images])
       %td
+        = feature_icon_select(property_type, property_type.title)
         = icon "Write", edit_admin_property_type_path(property_type)
         = trash_icon(property_type, admin_property_type_path(property_type), "#{property_type.title}")
