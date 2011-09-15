@@ -61,10 +61,3 @@
     .side-column-section
       %h2 Directions
       =@region.directions
-  - if !@property_types.empty?
-    .side-column-section
-      %h2 Plans
-      %ul.list-of-plans
-        - for plan in @property_types
-          %li= link_to(plan.title, plan)
-        
