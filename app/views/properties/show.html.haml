@@ -44,6 +44,10 @@
                 %span.strikethrough= number_to_currency(@property.asking_price)
               - else
                 %span.price= number_to_currency(@property.asking_price)
+          - if !@property.size.blank?
+            #property-size.spec
+              .property-label Size:
+              = @property.size
           - if !@property.beds_count.blank?
             #property-beds-count.spec
               .property-label Bedrooms:
