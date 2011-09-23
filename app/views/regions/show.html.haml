@@ -53,6 +53,7 @@
               - unless image.caption.blank?
                 .image-caption
                   =image.caption  
+      = clear
 - content_for :head do
   = stylesheet_link_tag "/plugin_assets/siteninja_properties/stylesheets/property_styles.css"
   :javascript
