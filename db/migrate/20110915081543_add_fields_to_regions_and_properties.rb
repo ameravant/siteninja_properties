@@ -16,8 +16,6 @@ class AddFieldsToRegionsAndProperties < ActiveRecord::Migration
     add_column :regions, :tab_3_title, :string
     add_column :regions, :tab_3_description, :text
     add_column :property_types, :region_id, :integer
-    add_column :property_types, :images_count, :integer
-    add_column :property_types, :features_count, :integer
   end
 
   def self.down

@@ -18,6 +18,7 @@ class RegionsController < ApplicationController
     @properties = Property.all(:joins => ['LEFT OUTER JOIN people ON people.id = properties.person_id'], :conditions =>[ "region_id = ? and confirmed = ? and sold = ?", @region.id, true, false], :order => "reduced_price asc")
     @property_types = @region.property_types
     @images = @region.images
+    @region_gallery_images = @region.images.reject{|i| !i.show_in_image_box?}
   end
   
   private

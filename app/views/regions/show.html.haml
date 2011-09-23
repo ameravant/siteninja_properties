@@ -9,6 +9,12 @@
     %li= link_to(@region.tab_2_title, "##{path_safe(@region.tab_2_title)}")
   - if !@region.tab_3_description.blank?
     %li= link_to(@region.tab_3_title, "##{path_safe(@region.tab_3_title)}")
+  - if !@region.tab_4_description.blank?
+    %li= link_to(@region.tab_4_title, "##{path_safe(@region.tab_4_title)}")
+  - if !@region.tab_4_description.blank?
+    %li= link_to(@region.tab_4_title, "##{path_safe(@region.tab_4_title)}")
+  - if !@region_gallery_images.empty?
+    %li= link_to("Gallery", "#gallery")
 = clear
 .panes
   .panel
@@ -27,7 +33,25 @@
   - if !@region.tab_3_description.blank?
     .panel
       = ninja_parse(@region.tab_3_description)
-  
+  - if !@region.tab_4_description.blank?
+    .panel
+      = ninja_parse(@region.tab_4_description)
+  - if !@region.tab_5_description.blank?
+    .panel
+      = ninja_parse(@region.tab_5_description)
+  - if !@region_gallery_images.empty?
+    .region-gallery
+      - for image in @region_gallery_images
+        .image
+          .image-thumb-container
+            .image-thumb
+              - unless image.description.blank?
+                = link_to image_tag(image.image.url(:medium), :alt => h(image.title), :title => h(image.title)), [@gallery, image]
+              - else
+                = link_to image_tag(image.image.url(:medium), :alt => h(image.title), :title => h(image.title)), image.image.url(:large), :class => "fancy", :rel => "gallery"
+            - unless image.caption.blank?
+              .image-caption
+                =image.caption  
 - content_for :head do
   = stylesheet_link_tag "/plugin_assets/siteninja_properties/stylesheets/property_styles.css"
   :javascript
