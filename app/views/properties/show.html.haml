@@ -34,16 +34,15 @@
           %address
             %span#main-address= @property.address + ", "
             == #{@property.city}, #{@property.state} #{@property.zip}
-          #property-price.spec
-            .property-label Priced From:
             - if @property.sold?
-              =display_status(@property)
+              %span.display-status=display_status(@property)
             - else
               - if @property.reduced_price != @property.asking_price
                 %span.price= number_to_currency(@property.reduced_price)
                 %span.strikethrough= number_to_currency(@property.asking_price)
               - else
                 %span.price= number_to_currency(@property.asking_price)
+
           - if !@property.size.blank?
             #property-size.spec
               .property-label Size:
@@ -64,6 +63,10 @@
             #property-garage-size.spec
               .property-label Garage:
               = @property.garage_size
+          - if !@property.other.blank?
+            #property-garage-size.spec
+              .property-label Other:
+              = @property.other
           = clear
         = @property.body.blank? ? simple_format(@property.description) : @property.body
       - unless @property.directions.blank?
