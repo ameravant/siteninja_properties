@@ -40,18 +40,19 @@
     .panel
       = ninja_parse(@region.tab_5_description)
   - if !@region_gallery_images.empty?
-    .region-gallery
-      - for image in @region_gallery_images
-        .image
-          .image-thumb-container
-            .image-thumb
-              - unless image.description.blank?
-                = link_to image_tag(image.image.url(:medium), :alt => h(image.title), :title => h(image.title)), [@gallery, image]
-              - else
-                = link_to image_tag(image.image.url(:medium), :alt => h(image.title), :title => h(image.title)), image.image.url(:large), :class => "fancy", :rel => "gallery"
-            - unless image.caption.blank?
-              .image-caption
-                =image.caption  
+    .panel
+      .region-gallery
+        - for image in @region_gallery_images
+          .image
+            .image-thumb-container
+              .image-thumb
+                - unless image.description.blank?
+                  = link_to image_tag(image.image.url(:medium), :alt => h(image.title), :title => h(image.title)), [@gallery, image]
+                - else
+                  = link_to image_tag(image.image.url(:medium), :alt => h(image.title), :title => h(image.title)), image.image.url(:large), :class => "fancy", :rel => "gallery"
+              - unless image.caption.blank?
+                .image-caption
+                  =image.caption  
 - content_for :head do
   = stylesheet_link_tag "/plugin_assets/siteninja_properties/stylesheets/property_styles.css"
   :javascript

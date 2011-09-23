@@ -41,8 +41,24 @@ ul.list-of-open-houses p { margin: 0; padding: 4px 0 6px; font-size: .85em; }
 div#primary-info.property-sold { background: #FFCFD7 !important; }
 span.sold { font-weight: bold; color: #D6343A; font-size: 1.4em; }
 div.images { margin-top: 0; }
+
 div.print-panes { display: none; }
 .print { height: 16px; line-height: 14px; text-decoration: none; font-weight: bold; float: right; display: block; margin-bottom: 5px; font-size: 16px; background: transparent url('http://www.site-ninja.com/plugin_assets/siteninja_core/images/icons/gray/16x16/Printer.png') no-repeat left center; padding-left: 20px; vertical-alignment: middle; }
+
+.region-gallery .gallery { float: left; margin: 0 6px 20px 0; }
+.region-gallery .gallery-thumb-container { float: left; padding: 2px; margin-bottom: .5em; border: 2px solid #a6b3bd; }
+.region-gallery .gallery-thumb-container:hover { border: 2px solid #747bd4; }
+.region-gallery .gallery-thumb { height: 125px; overflow: hidden; background-color: #111; }
+.region-gallery .gallery-name { text-align: center; }
+
+.region-gallery .image { float: left; margin: 0 4px 0px 0; }
+.region-gallery .image-thumb-container { float: left; padding: 2px; margin-bottom: .5em; border: 2px solid #a6b3bd; }
+.region-gallery .image-thumb-container:hover { border: 2px solid #747bd4; }
+.region-gallery .image-thumb { height: 125px; overflow: hidden; }
+.region-gallery .image-thumb { width: 200px; }
+.region-gallery .image-caption { font-size: .8em; }
+.region-gallery .image-thumb-container { width: 200px; }
+
 
 span.sold{
 	background:red;
