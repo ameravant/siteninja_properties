@@ -51,18 +51,18 @@
             #property-beds-count.spec
               .property-label Bedrooms:
               = @property.beds_count
-          - if !@property.baths_count.blank?
-            #property-baths-count.spec
-              .property-label Bathrooms:
-              = @property.baths_count
-          - if !@property.stories.blank?
-            #property-stories.spec
-              .property-label Stories:
-              = @property.stories
           - if !@property.garage_size.blank?
             #property-garage-size.spec
               .property-label Garage:
               = @property.garage_size
+          - if !@property.stories.blank?
+            #property-stories.spec
+              .property-label Stories:
+              = @property.stories
+          - if !@property.baths_count.blank?
+            #property-baths-count.spec
+              .property-label Bathrooms:
+              = @property.baths_count
           - if !@property.other.blank?
             #property-garage-size.spec
               .property-label Other:
