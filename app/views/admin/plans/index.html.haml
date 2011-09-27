@@ -1,0 +1,24 @@
+- content_for :meta_title do
+  Plans
+%h1= large_icon('Home') + ' ' + yield(:meta_title).strip
+
+%div.box
+  / .float-right= render :partial => "/shared/search"
+  %span.hmenu
+    = icon "Plus", new_admin_plan_path
+    = link_to "Add a Plan", new_admin_plan_path
+  = clear
+  
+%table.full-width
+  %tr
+    %th Title
+    %th Images
+    %th Options
+  - for plan in @plans
+    %tr[plan]
+      %td= link_to(plan.title, edit_admin_plan_path(plan))
+      %td= link_to("#{plan.images.size} images", admin_plan_images_path(plan))
+      %td
+        = feature_icon_select(plan, plan.title) if current_user.has_role("Admin")
+        = icon "Write", edit_admin_plan_path(plan)
+        = trash_icon(plan, admin_plan_path(plan), "#{plan.address}")

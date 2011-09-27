@@ -1,0 +1,66 @@
+- form_for [:admin, @plan], :html => { :onsubmit => "form_submitted()" } do |f|
+  %fieldset
+    %dl
+      %dt.form-label= f.label :title
+      %dd.form-option= f.text_field :title, :size => "80" 
+    #plan-address
+      %h3 Plan Specs
+      %dl
+        %dt.form-label= f.label :beds_count
+        %dd.form-option= f.text_field :beds_count, :size => "44" 
+        %dt.form-label= f.label :baths_count
+        %dd.form-option= f.text_field :baths_count, :size => "44" 
+        %dt.form-label= f.label :garage_size
+        %dd.form-option= f.text_field :garage_size, :size => "44"
+        %dt.form-label= f.label :stories
+        %dd.form-option= f.text_field :stories, :size => "44"
+        %dt.form-label= f.label :payment
+        %dd.form-option= f.text_field :payment, :size => "44"   
+        %dt.form-label= f.label :size
+        %dd.form-option= f.text_field :size, :size => "44"   
+        %dt.form-label= f.label :other
+        %dd.form-option= f.text_field :other, :size => "44"   
+    #plan-other
+      %h3 Other Details
+      %dl
+        %dt.form-label= f.label :region_id, "#{(!CMS_CONFIG['site_settings']['region_title'].blank? ? CMS_CONFIG['site_settings']['region_title'] : "Neighborhood")}"
+        %dd.form-option= f.select :region_id, Region.all.sort_by(&:title).collect {|r| [r.title, r.id]}, {:include_blank => "Select a #{(!CMS_CONFIG['site_settings']['region_title'].blank? ? CMS_CONFIG['site_settings']['region_title'] : "Neighborhood")}"}
+        %dt.form-label= f.label :property_type_id
+        %dd.form-option= f.select :property_type_id, PropertyType.all.sort_by(&:title).collect {|r| [r.title, r.id]}, {:include_blank => "Select a property type"}
+        %dt.form-label= f.label :list_price
+        %dd.form-option
+          $
+          = f.text_field :list_price, :size => "10"
+    = clear
+    %dl
+      %dt.form-label= f.label :description, "Short Description"
+      %dd.form-option= f.text_area :description, :size => "75x12"
+      %dt.form-label= f.label :body, "Long Description"
+      %dd.form-option= f.text_area :body, :size => "85x35", :class => "mceEditor"
+      %dt.form-label= f.label :tab_1_title
+      %dd.form-option= f.text_field :tab_1_title, :size => "44" 
+      %dt.form-label= f.label :tab_1_description
+      %dd.form-option= f.text_area :tab_1_description, :size => "85x35", :class => "mceEditor"
+      %dt.form-label= f.label :tab_2_title
+      %dd.form-option= f.text_field :tab_2_title, :size => "44" 
+      %dt.form-label= f.label :tab_2_description
+      %dd.form-option= f.text_area :tab_2_description, :size => "85x35", :class => "mceEditor"
+      %dt.form-label= f.label :tab_3_title
+      %dd.form-option= f.text_field :tab_3_title, :size => "44" 
+      %dt.form-label= f.label :tab_3_description
+      %dd.form-option= f.text_area :tab_3_description, :size => "85x35", :class => "mceEditor"
+      %dt.form-label= f.label :tab_4_title
+      %dd.form-option= f.text_field :tab_4_title, :size => "44" 
+      %dt.form-label= f.label :tab_4_description
+      %dd.form-option= f.text_area :tab_4_description, :size => "85x35", :class => "mceEditor"
+      %dt.form-label= f.label :tab_5_title
+      %dd.form-option= f.text_field :tab_5_title, :size => "44" 
+      %dt.form-label= f.label :tab_5_description
+      %dd.form-option= f.text_area :tab_5_description, :size => "85x35", :class => "mceEditor"
+    = f.submit
+    
+- content_for :head do
+  %style{:type => "text/css"}
+    div#plan-address { float: left; width: 400px; margin-right: 20px; }
+    div#plan-other { float: right; width: 400px; }
+    div#sold label { font-size: 1.2em; font-weight: bold; font-color: #D43A38; }

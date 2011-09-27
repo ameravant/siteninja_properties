@@ -18,4 +18,8 @@ namespace :admin do |admin|
     property_type.resources :menus
     property_type.resources :images, :member => { :reorder => :put }, :collection => { :reorder => :put, :add_multiple => :get }
   end
+  admin.resources :plans, :has_many => { :features, :images } do |plan|
+    plan.resources :menus
+    plan.resources :images, :member => { :reorder => :put }, :collection => { :reorder => :put, :add_multiple => :get }
+  end
 end

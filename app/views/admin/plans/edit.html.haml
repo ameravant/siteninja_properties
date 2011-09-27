@@ -1,0 +1,9 @@
+%h1 Manage Plan
+%div.box
+  %span.menu
+    = icon "Plus", admin_property_images_path(@plan)
+    = link_to "Add Images", admin_property_images_path(@plan)
+    =clear
+  =clear
+%br/
+= render :partial => 'form'

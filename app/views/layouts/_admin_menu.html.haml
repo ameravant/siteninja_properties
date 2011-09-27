@@ -3,9 +3,10 @@
     %ul
       %li= link_to "Homepage", "/", :id => "home"
       %li= link_to "Dashboard", "/admin", :id => "admin-home"
-      %li= link_to "Properties", admin_properties_path, :id => "admin-properties"
+      %li= link_to "#{(!CMS_CONFIG['site_settings']['property_title'].blank? ? (CMS_CONFIG['site_settings']['property_title']).pluralize : "Properties")}", admin_properties_path, :id => "admin-properties"
       %li= link_to "Property Types", admin_property_types_path, :id => "admin-property-types"
-      %li= link_to "Regions", admin_regions_path, :id => "admin-regions"
+      %li= link_to "Plans", admin_plans_path, :id => "admin-plans"
+      %li= link_to "#{(!CMS_CONFIG['site_settings']['region_title'].blank? ? (CMS_CONFIG['site_settings']['region_title']).pluralize : "Neighborhood")}", admin_regions_path, :id => "admin-regions"
       
       - if @cms_config['modules']['pages']
         %li= link_to "Assets", admin_assets_path, :id => "admin-assets" if current_user.has_role(@permissions['assets'])
