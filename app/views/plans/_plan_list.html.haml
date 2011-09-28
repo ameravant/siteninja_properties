@@ -11,7 +11,7 @@
     %tr
       %td
         - unless plan.images.empty?
-          = link_to(image_tag(plan.images.first.image(:small), :style => "float: left; margin: 0 10px 10px 0;", :alt => plan.formatted_address, :title => plan.formatted_address), [region, plan])
+          = link_to(image_tag(plan.images.first.image(:small), :style => "float: left; margin: 0 10px 10px 0;", :alt => plan.title, :title => plan.title), plan)
       %td
         = link_to(plan.title, plan)
       %td= plan.size
@@ -23,5 +23,5 @@
           %div= pluralize(plan.baths_count, "bath")
         - unless plan.garage_size.blank?
           %div= plan.garage_size
-      %td= number_to_currency(plan.reduced_price)
+      %td= number_to_currency(plan.list_price)
       %td= plan.payment
