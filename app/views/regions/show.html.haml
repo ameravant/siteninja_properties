@@ -25,7 +25,7 @@
         - unless @pending_properties.empty? and @sold_properties.empty?
           %h2= status
         =render :partial => "properties/property_list", :locals => {:region => @region, :properties => instance_variable_get("@#{status.downcase}_properties")}
-  - if !@plans.empty?
+  - if !@region.plans.empty?
     .panel
       =render :partial => "plans/plan_list", :locals => {:region => @region, :plans => @region.plans}
   
