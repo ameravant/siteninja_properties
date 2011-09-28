@@ -27,7 +27,7 @@
         =render :partial => "properties/property_list", :locals => {:region => @region, :properties => instance_variable_get("@#{status.downcase}_properties")}
   - if !@plans.empty?
     .panel
-      =render :partial => "plans/plan_list", :locals => {:region => @region, :plans => @region.plans)}
+      =render :partial => "plans/plan_list", :locals => {:region => @region, :plans => @region.plans}
   
   - if !@region.tab_1_description.blank?
     .panel
