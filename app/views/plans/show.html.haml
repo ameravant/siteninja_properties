@@ -83,6 +83,9 @@
                 - unless image.caption.blank?
                   .image-caption
                     =image.caption  
+    - if !@properties.empty?
+      .panel
+        =render :partial => "properties/property_list", :locals => {:region => @region, :properties => @properties}
     = clear
 
 - content_for :head do

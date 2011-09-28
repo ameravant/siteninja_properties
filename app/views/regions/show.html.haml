@@ -3,6 +3,8 @@
 = ninja_parse(@region.description)
 %ul.tabs
   %li= link_to("Move-In Ready", "#properties")
+  - if !@region.plans.empty?
+    %li=  link_to("Home Designs", "#plans")
   - if !@region.tab_1_description.blank?
     %li= link_to(@region.tab_1_title, "##{path_safe(@region.tab_1_title)}")
   - if !@region.tab_2_description.blank?
@@ -23,7 +25,10 @@
         - unless @pending_properties.empty? and @sold_properties.empty?
           %h2= status
         =render :partial => "properties/property_list", :locals => {:region => @region, :properties => instance_variable_get("@#{status.downcase}_properties")}
-
+  - if !@plans.empty?
+    .panel
+      =render :partial => "plans/plan_list", :locals => {:region => @region, :plans => @region.plans)}
+  
   - if !@region.tab_1_description.blank?
     .panel
       = ninja_parse(@region.tab_1_description)
