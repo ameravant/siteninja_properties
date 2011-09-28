@@ -44,6 +44,8 @@
         %dd.form-option= f.select :region_id, Region.all.sort_by(&:title).collect {|r| [r.title, r.id]}, {:include_blank => "Select a region"}
         %dt.form-label= f.label :property_type_id
         %dd.form-option= f.select :property_type_id, PropertyType.all.sort_by(&:title).collect {|r| [r.title, r.id]}, {:include_blank => "Select a property type"}
+        %dt.form-label= f.label :plan_id
+        %dd.form-option= f.select :plan_id, Plan.all.sort_by(&:title).collect {|r| [r.title, r.id]}, {:include_blank => "Select a plan"}
         %dt.form-label= f.label :asking_price
         %dd.form-option
           $

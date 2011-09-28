@@ -2,6 +2,7 @@ class Property < ActiveRecord::Base
   belongs_to :region
   belongs_to :person
   belongs_to :property_type
+  belongs_to :plan
   has_many :images, :as => :viewable, :dependent => :destroy
   has_many :features, :as => :featurable, :dependent => :destroy
   before_create :set_reduced_price

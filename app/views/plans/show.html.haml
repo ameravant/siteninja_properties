@@ -1,0 +1,120 @@
+- content_for :meta_title do
+  == #{@plan.title}
+- content_for :head do
+  :javascript
+    jQuery(function() { 
+    // setup ul.tabs to work as tabs for each div directly under div.panes 
+    jQuery("ul.tabs").tabs("div.panes > div.panel"); 
+    });
+%h1#property-title= @plan.title
+= ninja_parse(@plan.body)
+%ul.tabs
+  %li= link_to("Specifications", "#specs")
+  - if !@plan.tab_1_description.blank?
+    %li= link_to(@plan.tab_1_title, "##{path_safe(@plan.tab_1_title)}")
+  - if !@plan.tab_2_description.blank?
+    %li= link_to(@plan.tab_2_title, "##{path_safe(@plan.tab_2_title)}")
+  - if !@plan.tab_3_description.blank?
+    %li= link_to(@plan.tab_3_title, "##{path_safe(@plan.tab_3_title)}")
+  - if !@plan.tab_4_description.blank?
+    %li= link_to(@plan.tab_4_title, "##{path_safe(@plan.tab_4_title)}")
+  - if !@plan.tab_5_description.blank?
+    %li= link_to(@plan.tab_5_title, "##{path_safe(@plan.tab_5_title)}")
+  - if !@plan_gallery_images.empty?
+    %li= link_to("Gallery", "#gallery")
+  - if !@properties.empty?
+    %li= link_to("Properties", "#properties")
+= clear
+.screen
+  .panes
+    .panel
+      #primary-info
+        - if !@plan.size.blank?
+          #property-size.spec
+            .property-label Size:
+            = @plan.size
+        - if !@plan.beds_count.blank?
+          #property-beds-count.spec
+            .property-label Bedrooms:
+            = @plan.beds_count
+        - if !@plan.garage_size.blank?
+          #property-garage-size.spec
+            .property-label Garage:
+            = @plan.garage_size
+        - if !@plan.stories.blank?
+          #property-stories.spec
+            .property-label Stories:
+            = @plan.stories
+        - if !@plan.baths_count.blank?
+          #property-baths-count.spec
+            .property-label Bathrooms:
+            = @plan.baths_count
+        - if !@plan.other.blank?
+          #property-garage-size.spec
+            .property-label Other:
+            = @plan.other
+        = clear
+    - if !@plan.tab_1_description.blank?
+      .panel
+        = ninja_parse(@plan.tab_1_description)
+    - if !@plan.tab_2_description.blank?
+      .panel
+        = ninja_parse(@plan.tab_2_description)
+    - if !@plan.tab_3_description.blank?
+      .panel
+        = ninja_parse(@plan.tab_3_description)
+    - if !@plan.tab_4_description.blank?
+      .panel
+        = ninja_parse(@plan.tab_4_description)
+    - if !@plan.tab_5_description.blank?
+      .panel
+        = ninja_parse(@plan.tab_5_description)
+    - if !@plan_gallery_images.empty?
+      .panel
+        .region-gallery
+          - for image in @plan_gallery_images
+            .image
+              .image-thumb-container
+                .image-thumb
+                  - unless image.description.blank?
+                    = link_to image_tag(image.image.url(:medium), :alt => h(image.title), :title => h(image.title)), [@gallery, image]
+                  - else
+                    = link_to image_tag(image.image.url(:medium), :alt => h(image.title), :title => h(image.title)), image.image.url(:large), :class => "fancy", :rel => "gallery"
+                - unless image.caption.blank?
+                  .image-caption
+                    =image.caption  
+    = clear
+
+- content_for :head do
+  = render :partial => "regions/google_maps_includes"
+- content_for :side_column do
+  - if !@region.address.blank?
+    #map-outer{:class => "side-column-section"}
+      #google_map
+      %div= link_to "View larger map", "http://maps.google.com?q=#{u @region.address}"
+    .side-column-section
+      %h2 Sales office
+      %address
+        %span#address= @region.address
+  - if !@region.phone.blank? or !@region.email.blank?
+    .side-column-section
+      %h2 Contact
+      %address
+        - if !@region.phone.blank?
+          #phone
+            %span#phone-title Phone:
+            = @region.phone
+        - if !@region.email.blank?
+          #email
+            %span#email-title Email:
+            = link_to(@region.email, "mailto:#{@region.email}")
+  - if !@region.directions.blank?
+    .side-column-section
+      %h2 Directions
+      =@region.directions
+  = clear
+= clear
+.clear
+- content_for :head do
+  = stylesheet_link_tag "/plugin_assets/siteninja_properties/stylesheets/property_styles.css"
+  %link{:href => "/plugin_assets/siteninja_properties/stylesheets/property_print_styles.css", :media => "print", :rel => "stylesheet", :type => "text/css"}
