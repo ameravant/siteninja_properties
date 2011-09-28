@@ -1,0 +1,27 @@
+%table.list-of-plans
+  %tr.list-of-plans-header
+    %th#property-images
+    %th#property-plans Home Plan
+    %th#property-size Size
+    %th#property-stories Stories
+    %th#property-rooms Rooms
+    %th#property-priced-from Priced From
+    %th#property-payment Payment
+  - for plan in plans
+    %tr
+      %td
+        - unless plan.images.empty?
+          = link_to(image_tag(plan.images.first.image(:small), :style => "float: left; margin: 0 10px 10px 0;", :alt => plan.formatted_address, :title => plan.formatted_address), [region, plan])
+      %td
+        = link_to(plan.title, plan)
+      %td= plan.size
+      %td= plan.stories
+      %td
+        - unless plan.beds_count.blank?
+          %div= pluralize(plan.beds_count, "bedrooms")
+        - unless plan.baths_count.blank?
+          %div= pluralize(plan.baths_count, "bath")
+        - unless plan.garage_size.blank?
+          %div= plan.garage_size
+      %td= number_to_currency(plan.reduced_price)
+      %td= plan.payment
