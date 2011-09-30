@@ -8,7 +8,6 @@ class Property < ActiveRecord::Base
   before_create :set_reduced_price
   before_update :set_reduced_price
   validates_presence_of :region_id
-  validates_presence_of :property_type_id
   validates_presence_of :address
   validates_presence_of :city
   validates_presence_of :asking_price

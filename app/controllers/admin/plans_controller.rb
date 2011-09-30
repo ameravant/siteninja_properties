@@ -16,8 +16,12 @@ class Admin::PlansController < AdminController
   
   def update
     if @plan.update_attributes(params[:plan])
-      flash[:message] = "Property Type updated successfully"
-      redirect_to admin_plans_path
+      flash[:message] = "Plan updated successfully"
+      if request.referrer =~ /add_multiple$/i
+        redirect_to [:admin, @plan, :images]
+      else
+        redirect_to admin_plans_path
+      end
     else
     render :action => "edit"
     end

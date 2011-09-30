@@ -13,7 +13,7 @@
         - unless property.images.empty?
           = link_to(image_tag(property.images.first.image(:small), :style => "float: left; margin: 0 10px 10px 0;", :alt => property.formatted_address, :title => property.formatted_address), [region, property])
       %td
-        = link_to(property.property_type.title, [region, property])
+        = link_to(property.plan.title, [region, property]) unless property.plan.blank?
       %td= property.size
       %td= property.stories
       %td

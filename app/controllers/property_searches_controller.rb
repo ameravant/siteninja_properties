@@ -2,15 +2,16 @@ class PropertySearchesController < ApplicationController
   unloadable
   before_filter :get_page
   def index
-    if params[:search][:region_id].blank? and params[:search][:property_type_id].blank?
-      @properties = Property.all(:joins => ['LEFT OUTER JOIN people ON people.id = properties.person_id'], :conditions => ["confirmed = ? and sold = ? and reduced_price >= ? and reduced_price <= ?", true, false, params[:min_price], params[:max_price]])
-    elsif params[:search][:region_id].blank?
-      @properties = Property.all(:joins => ['LEFT OUTER JOIN people ON people.id = properties.person_id'], :conditions => ["confirmed = ? and sold = ? and property_type_id = ? and reduced_price >= ? and reduced_price <= ?", true, false, params[:search][:property_type_id], params[:min_price], params[:max_price]])
-    elsif params[:search][:property_type_id].blank?
-      @properties = Property.all(:joins => ['LEFT OUTER JOIN people ON people.id = properties.person_id'], :conditions => ["confirmed = ? and sold = ? and region_id = ? and reduced_price >= ? and reduced_price <= ?", true, false, params[:search][:region_id], params[:min_price], params[:max_price]])
-    else
-      @properties = Property.all(:joins => ['LEFT OUTER JOIN people ON people.id = properties.person_id'], :conditions => ["confirmed = ? and sold = ? and property_type_id = ? and region_id = ? and reduced_price >= ? and reduced_price <= ?", true, false, params[:search][:property_type_id], params[:search][:region_id], params[:min_price], params[:max_price]])
+    # Build Arrays for Conditions
+    conditions = ["confirmed = ? and sold = ? and reduced_price >= ? and reduced_price <= ?", true, false, params[:min_price], params[:max_price]]
+    conditions.add_condition ['region_id = ?', params[:search][:region_id]] if !params[:search][:region_id].blank?
+    if params[:search][:property_type_id]
+      conditions.add_condition ['property_type_id = ?', params[:search][:property_type_id]] if !params[:search][:property_type_id].blank?
     end
+    if params[:search][:plan_id]
+      conditions.add_condition ['plan_id = ?', params[:search][:plan_id]] if !params[:search][:plan_id].blank?
+    end
+    @properties = Property.all(:joins => ['LEFT OUTER JOIN people ON people.id = properties.person_id'], :conditions => conditions)
   end
   
   def get_page
@@ -34,4 +35,5 @@ class PropertySearchesController < ApplicationController
     @menu = @page.menus.first
     @side_column_sections = ColumnSection.all(:conditions => {:column_id => @page.column_id, :visible => true})
   end
+  
 end

@@ -2,14 +2,33 @@
   #home-property-search-outer
     #home-property-search-inner
       %h1 Find a <span>Home</span>
-      - form_tag("/property_searches", :method => "get", :id => "search_form_home") do
+      - form_tag("/property_searches", :method => "get", :id => "search_form_home", :name => "search") do
         %fieldset
-          = select :search, :region_id, Region.all.sort_by(&:title).collect {|r| [r.title, r.id]}, :include_blank => "Select a #{(!CMS_CONFIG['site_settings']['region_title'].blank? ? CMS_CONFIG['site_settings']['region_title'] : "Neighborhood")}", :style => "width: 275px;"
+          = select :search, :region_id, Region.all.sort_by(&:title).collect {|r| [r.title, r.id]}, {:include_blank => "Select a #{(!CMS_CONFIG['site_settings']['region_title'].blank? ? CMS_CONFIG['site_settings']['region_title'] : "Neighborhood")}"}, :style => "width: 275px;", :onchange => "setPlans()"
           %br
-          = select :search, :property_type_id, PropertyType.all.sort_by(&:title).collect {|pt| [pt.title, pt.id]}, :include_blank => "Select a #{(!CMS_CONFIG['site_settings']['property_type_title'].blank? ? CMS_CONFIG['site_settings']['property_type_title'] : "Property Type")}"
+          - unless PropertyType.all.empty?
+            = select :search, :property_type_id, PropertyType.all.sort_by(&:title).collect {|pt| [pt.title, pt.id]}, :include_blank => "Select a #{(!CMS_CONFIG['site_settings']['property_type_title'].blank? ? CMS_CONFIG['site_settings']['property_type_title'] : "Property Type")}"
+            %br
+          = select :search, :plan_id, Plan.all.sort_by(&:title).collect {|pt| [pt.title, pt.id]}, {:include_blank => "Select a Plan"}
           %br
           = select_tag :min_price, options_for_select([["$250,000", "250000"], ["$275,000", "275000"], ["$300,000", "300000"], ["$325,000", "325000"], ["$350,000", "350000"], ["$375000", "375000"], ["$400,000", "400000"], ["$425,000", "425000"], ["$450,000", "450000"], ["$475,000", "475000"], ["$500,000", "500000"], ["$525,000", "525000"], ["$550,000", "550000"], ["$575,000", "575000"], ["$600,000", "600000"]])
           &mdash;
           = select_tag :max_price, options_for_select([["$250,000", "250000"], ["$275,000", "275000"], ["$300,000", "300000"], ["$325,000", "325000"], ["$350,000", "350000"], ["$375000", "375000"], ["$400,000", "400000"], ["$425,000", "425000"], ["$450,000", "450000"], ["$475,000", "475000"], ["$500,000", "500000"], ["$525,000", "525000"], ["$550,000", "550000"], ["$575,000", "575000"], ["$600,000", "600000"], ["$600,001+", "9999999999999999999"]], ["$600,000", "600000"])
           %br
           = submit_tag "Search"
+
+- content_for :head do
+  %script{:type => "text/javascript"}
+    function setPlans(){
+    - for region in Region.all
+      == if(document.getElementById('search_region_id').value == #{region.id}) {
+      document.getElementById('search_plan_id').options.length=0
+      - i = 0
+      - plans = Plan.all(:conditions => {:region_id => region.id})
+      document.getElementById('search_plan_id').options[0]= new Option("Select a Plan", "", true, false)
+      - unless plans.empty?
+        - for plan in plans
+          - i += 1
+          ==document.getElementById('search_plan_id').options[#{i}]=new Option("#{plan.title}", "#{plan.id}", false, false)
+      };
+    };

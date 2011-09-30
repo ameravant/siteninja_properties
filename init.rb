@@ -1,4 +1,5 @@
 #require 'image'
+require 'rails_ext'
 require 'person_ext'
 #require 'events_ext'
 require "12_hour_time"
