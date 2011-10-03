@@ -6,4 +6,8 @@ class Region < ActiveRecord::Base
   has_many :features, :as => :featurable, :dependent => :destroy
   has_many :images, :as => :viewable, :dependent => :destroy
   # accepts_nested_attributes_for :images
+  
+  def to_param
+    "#{self.id}-#{self.permalink}"
+  end
 end

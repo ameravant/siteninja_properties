@@ -6,8 +6,6 @@
         = link_to(image_tag(region.images.first.image(:medium_thumb), :alt => region.title, :title => region.title), region_path(region))
       = link_to(region.title, region_path(region), :class => "region-title")
     = cycle("","","<li class=\"clear\"></li>")
-    
-    
 - content_for :head do
   %style{:type => "text/css"}
     ul.list-of-regions { margin: 0; padding: 20px 0; font-size: 1.4em; }
