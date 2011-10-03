@@ -18,7 +18,7 @@
         = property.size
         - unless property.size.blank?
           %br
-        = link_to(property.plan.title, plan) unless property.plan.blank?
+        = link_to(property.plan.title, plan_path(property.plan)) unless property.plan.blank?
       %td= property.stories
       %td
         - unless property.beds_count.blank?
