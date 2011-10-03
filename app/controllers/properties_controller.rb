@@ -19,7 +19,7 @@ class PropertiesController < ApplicationController
     @region = Region.find(@property.region_id)
     @images = @property.images
     add_breadcrumb "Home", "/"
-    add_breadcrumb "Regions", regions_path
+    add_breadcrumb !CMS_CONFIG['site_settings']['region_title'].blank? ? CMS_CONFIG['site_settings']['region_title'].pluralize : "Regions", regions_path
     add_breadcrumb @region.title, region_path(@region)
     add_breadcrumb @property.formatted_address
     if params[:print] == "true"

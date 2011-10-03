@@ -3,7 +3,7 @@ class RegionsController < ApplicationController
   before_filter :get_page
   def index
     add_breadcrumb "Home", "/"
-    add_breadcrumb "Regions"
+    add_breadcrumb !CMS_CONFIG['site_settings']['region_title'].blank? ? CMS_CONFIG['site_settings']['region_title'].pluralize : "Regions"
     @regions = Region.all
   end
   

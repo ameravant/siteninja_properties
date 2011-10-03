@@ -4,7 +4,7 @@
 %ul.tabs
   %li= link_to("Move-In Ready", "#properties")
   - if !@region.plans.empty?
-    %li=  link_to("Home Designs", "#plans")
+    %li=  link_to("Home Plans", "#plans")
   - if !@region.tab_1_description.blank?
     %li= link_to(@region.tab_1_title, "##{path_safe(@region.tab_1_title)}")
   - if !@region.tab_2_description.blank?

@@ -1,8 +1,9 @@
+
 resources :properties, :collection => {:print => :get}, :member => {:print => :get}
 resources :property_searches
 resources :property_types
 resources :plans
-resources :regions, :has_many => :properties
+resources :regions, :as => (path_safe(!CMS_CONFIG['site_settings']['region_title'].blank? ? CMS_CONFIG['site_settings']['region_title'] : "regions")), :has_many => :properties
 resources :profiles, :collection => { :forgot_password => :any }, :has_many => :comments
 namespace :admin do |admin|
   admin.resources :regions, :has_many => { :features, :menus } do |region|
