@@ -23,5 +23,5 @@
           %div= pluralize(plan.baths_count, "bath")
         - unless plan.garage_size.blank?
           %div= plan.garage_size
-      %td= number_to_currency(plan.list_price).gsub(".00", "")
+      %td= number_to_currency(plan.list_price).gsub(".00", "") unless plan.list_price.blank?
       %td= plan.payment
