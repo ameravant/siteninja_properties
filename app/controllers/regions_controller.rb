@@ -9,7 +9,7 @@ class RegionsController < ApplicationController
   
   def show
     add_breadcrumb "Home", "/"
-    add_breadcrumb "Regions", regions_path
+    add_breadcrumb !CMS_CONFIG['site_settings']['region_title'].blank? ? CMS_CONFIG['site_settings']['region_title'].pluralize : "Regions", regions_path
     @region = Region.find(params[:id])
     add_breadcrumb @region.title
     @active_properties = @region.properties.active.by_price
