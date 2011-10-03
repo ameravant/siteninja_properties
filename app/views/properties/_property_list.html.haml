@@ -16,7 +16,7 @@
         = link_to(property.formatted_address, [region, property])
       %td
         = property.size
-        - unless property.size.blank? and property.plan.blank?
+        - unless property.size.blank?
           %br
         = link_to(property.plan.title, [region, property]) unless property.plan.blank?
       %td= property.stories
