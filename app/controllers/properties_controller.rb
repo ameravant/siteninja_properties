@@ -18,6 +18,7 @@ class PropertiesController < ApplicationController
     end
     @region = Region.find(@property.region_id)
     @images = @property.images
+    @property_gallery_images = @property.images.reject{|i| !i.show_in_image_box?}
     add_breadcrumb "Home", "/"
     add_breadcrumb !CMS_CONFIG['site_settings']['region_title'].blank? ? CMS_CONFIG['site_settings']['region_title'].pluralize : "Regions", regions_path
     add_breadcrumb @region.title, region_path(@region)
