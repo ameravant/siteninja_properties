@@ -44,7 +44,7 @@
   - if !@region.tab_5_description.blank?
     .panel
       = ninja_parse(@region.tab_5_description)
-  - if !@region_gallery_images_images.empty?
+  - if !@region_gallery_images.empty?
     .panel
       .region-gallery
         - for image in @region_gallery_images
