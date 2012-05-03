@@ -13,7 +13,7 @@
   - content_for :side_column do
     = link_to("Print", "javascript:void(0)", :onclick => "window.open ('#{property_path(@property)}?print=true','printproperty','menubar=0,width=700,height=500');", :class => "print")
     = clear
-  - if !@property.plan.blank?
+  - if @property.plan == nil
     %h1#property-title= @property.formatted_address
   - else
     %h1#property-title= @property.plan.title
