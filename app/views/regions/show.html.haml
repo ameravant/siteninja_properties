@@ -64,11 +64,11 @@
     // setup ul.tabs to work as tabs for each div directly under div.panes 
     jQuery("ul.tabs").tabs("div.panes > div.panel"); 
     });
-  = render :partial => "google_maps_includes"
+  
 - content_for :side_column do
   - if !@region.address.blank?
     #map-outer{:class => "side-column-section"}
-      #google_map
+      = render :partial => "google_maps_includes"
       %div= link_to "View larger map", "http://maps.google.com?q=#{u @region.address}"
     .side-column-section
       %h2 Sales office
