@@ -19,7 +19,7 @@
     %h1#property-title= @property.plan.title
   - if !@property.region.blank?
     %h2#region= @property.region.title
-  = render :partial => "shared/embed_slideshow"
+  = render :partial => "shared/embed_slideshow", :locals => {:slideshow => "true"}
 
   %ul.tabs
     %li= link_to("Description", "#Description")
