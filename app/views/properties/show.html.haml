@@ -105,12 +105,10 @@
                 =render :partial => "properties/property_list", :locals => {:region => @region, :properties => @property.person.properties.send(status.downcase.to_sym).by_price}
 
   - address = "#{@property.address.strip}, #{@property.city}, #{@property.state}"
-  - content_for :head do
-    = render :partial => "google_maps_includes"
 - content_for :side_column do
   - if !@region.address.blank?
     #map-outer{:class => "side-column-section"}
-      #google_map
+      = render :partial => "google_maps_includes"
       %div= link_to "View larger map", "http://maps.google.com?q=#{u @region.address}"
     .side-column-section
       %h2 Sales office
