@@ -108,7 +108,7 @@
 - content_for :side_column do
   - if !@region.address.blank?
     #map-outer{:class => "side-column-section"}
-      = render :partial => "google_maps_includes"
+    = render :partial => "google_maps_includes"
       %div= link_to "View larger map", "http://maps.google.com?q=#{u @region.address}"
     .side-column-section
       %h2 Sales office

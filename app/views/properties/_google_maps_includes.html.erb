@@ -1,3 +1,5 @@
+<%- address = "#{@property.address.strip}, #{@property.city}, #{@property.state}" -%>
+
 <%- @google_map_count = 0 unless @google_map_count -%>
 <%- @google_map_count += 1 -%>
 <div class="google-map-wrapper">
