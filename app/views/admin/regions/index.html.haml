@@ -19,6 +19,6 @@
       %td= link_to(region.title, edit_admin_region_path(region))
       %td= link_to("%d images" % region.images_count, [:admin, region, :images])
       %td
-        = feature_icon_select(region, region.title)
+        = #feature_icon_select(region, region.title)
         = icon "Write", edit_admin_region_path(region)
         = trash_icon(region, admin_region_path(region), "#{region.title}")

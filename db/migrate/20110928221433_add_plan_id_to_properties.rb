@@ -2,7 +2,7 @@ class AddPlanIdToProperties < ActiveRecord::Migration
   def self.up
     add_column :properties, :plan_id, :integer
     add_column :plans, :planid, :string
-    add_column :properties, :lot_number, :string
+    #add_column :properties, :lot_number, :string
   end
 
   def self.down
