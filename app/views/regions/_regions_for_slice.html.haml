@@ -1,0 +1,8 @@
+%h2= slice.title
+%ul.region-list.list_of_links
+- for region in @regions
+  %li
+    - unless region.images.empty?
+      = link_to("#{image_tag(region.images.first.image(:medium_thumb), :alt => region.title, :title => region.title)} <h3>#{link_to(region.title, region_path(region), :class => "region-title")}</h3>", region_path(region))
+    - else
+    	= link_to("<h3>#{link_to(region.title, region_path(region), :class => "region-title")}</h3>", region_path(region))
