@@ -1,0 +1,14 @@
+%h2 Select a Region
+%ul.list-of-regions
+- for region in @regions
+  %li
+    - unless region.images.empty?
+      = link_to(image_tag(region.images.first.image(:medium_thumb), :alt => region.title, :title => region.title), region_path(region))
+    = link_to(region.title, region_path(region), :class => "region-title")
+  = cycle("","","<li class=\"clear\"></li>")
+- content_for :head do
+%style{:type => "text/css"}
+  ul.list-of-regions { margin: 0; padding: 20px 0; font-size: 1.4em; }
+  ul.list-of-regions li { list-style: none; display: block; width: 156px; float: left; margin: 0 10px 10px 0; }
+  ul.list-of-regions li a.region-title { display: block; color: #fff; padding: 5px 0; width: 156px; text-align: center; background: #000; text-decoration: none; font-size: .85; }
+  ul.list-of-regions li.clear { width: 0; clear: both; margin: 0; }
