@@ -4,107 +4,110 @@
 - if params[:print] == "true"
   = render :partial => "print"
 - else
-  - content_for :head do
-    :javascript
-      jQuery(function() { 
-      // setup ul.tabs to work as tabs for each div directly under div.panes 
-      jQuery("ul.tabs").tabs("div.panes > div.panel"); 
-      });
-  - content_for :side_column do
-    = link_to("Print", "javascript:void(0)", :onclick => "window.open ('#{property_path(@property)}?print=true','printproperty','menubar=0,width=700,height=500');", :class => "print")
-    = clear
-  - if @property.plan == nil
-    %h1#property-title= @property.formatted_address
-  - else
-    %h1#property-title= @property.plan.title
-  - if !@property.region.blank?
-    %h2#region= @property.region.title
-  = render :partial => "shared/embed_slideshow", :locals => {:slideshow => "true"}
+  - if !@cms_config['site_settings']['enable_responsive_layouts']
+    - content_for :head do
+      :javascript
+        jQuery(function() { 
+        // setup ul.tabs to work as tabs for each div directly under div.panes 
+        jQuery("ul.tabs").tabs("div.panes > div.panel"); 
+        });
+    - content_for :side_column do
+      = link_to("Print", "javascript:void(0)", :onclick => "window.open ('#{property_path(@property)}?print=true','printproperty','menubar=0,width=700,height=500');", :class => "print")
+      = clear
+    - if @property.plan == nil
+      %h1#property-title= @property.formatted_address
+    - else
+      %h1#property-title= @property.plan.title
+    - if !@property.region.blank?
+      %h2#region= @property.region.title
+    = render :partial => "shared/embed_slideshow", :locals => {:slideshow => "true"}
 
-  %ul.tabs
-    %li= link_to("Description", "#Description")
-    - if !@property.directions.blank?
-      %li= link_to("Directions", "#Directions")
-    - if !@property.showing_instructions.blank?
-      %li= link_to("Showing Instructions", "#ShowingInstructions")
-    - if !@property_gallery_images.empty?
-      %li= link_to("Gallery", "#gallery")
-    - unless @property.person.profile.blank?
-      - if @property.person.properties.size > 1
-        %li= link_to("Listings", "#OwnerListings")
-  = clear
-  .screen
-    .panes
-      .panel
-        #primary-info{:class => (@property.sold? ? "property-sold" : "property-available")}
-          %address
-            %span#main-address= @property.address + ", "
-            == #{@property.city}, #{@property.state} #{@property.zip}
-            - if @property.sold?
-              %span.display-status=display_status(@property)
-            - else
-              - if @property.reduced_price != @property.asking_price
-                %span.price= number_to_currency(@property.reduced_price)
-                %span.strikethrough= number_to_currency(@property.asking_price)
-              - else
-                %span.price= number_to_currency(@property.asking_price)
-
-          - if !@property.size.blank?
-            #property-size.spec
-              .property-label Size:
-              = @property.size
-          - if !@property.beds_count.blank?
-            #property-beds-count.spec
-              .property-label Bedrooms:
-              = @property.beds_count
-          - if !@property.garage_size.blank?
-            #property-garage-size.spec
-              .property-label Garage:
-              = @property.garage_size
-          - if !@property.stories.blank?
-            #property-stories.spec
-              .property-label Stories:
-              = @property.stories
-          - if !@property.baths_count.blank?
-            #property-baths-count.spec
-              .property-label Bathrooms:
-              = @property.baths_count
-          - if !@property.other.blank?
-            #property-garage-size.spec
-              .property-label Other:
-              = @property.other
-          = clear
-        = @property.body.blank? ? simple_format(@property.description) : @property.body
-      - unless @property.directions.blank?
-        .panel
-          = simple_format(@property.directions)
-      - unless @property.showing_instructions.blank?
-        .panel
-          = simple_format(@property.showing_instructions)
+    %ul.tabs
+      %li= link_to("Description", "#Description")
+      - if !@property.directions.blank?
+        %li= link_to("Directions", "#Directions")
+      - if !@property.showing_instructions.blank?
+        %li= link_to("Showing Instructions", "#ShowingInstructions")
       - if !@property_gallery_images.empty?
-        .panel
-          .region-gallery
-            - for image in @property_gallery_images
-              .image
-                .image-thumb-container
-                  .image-thumb
-                    = link_to image_tag(image.image.url(:medium), :alt => h(image.title), :title => h(image.title)), image.image.url(:large), :class => "fancy", :rel => "gallery"
-                  - unless image.caption.blank?
-                    .image-caption
-                      =image.caption  
-              = cycle("","", clear)
-          = clear
-
+        %li= link_to("Gallery", "#gallery")
       - unless @property.person.profile.blank?
-        - if @property.person.properties.size > 0
-          .panel
-            -for status in ["Active", "Pending", "Sold"]
-              - if @property.person.properties.send(status.downcase.to_sym).by_price.any?
-                - if @property.person.properties.send("pending").by_price.any? and @property.person.properties.send("sold").by_price.any?
-                  %h2= status
-                =render :partial => "properties/property_list", :locals => {:region => @region, :properties => @property.person.properties.send(status.downcase.to_sym).by_price}
+        - if @property.person.properties.size > 1
+          %li= link_to("Listings", "#OwnerListings")
+    = clear
+    .screen
+      .panes
+        .panel
+          #primary-info{:class => (@property.sold? ? "property-sold" : "property-available")}
+            %address
+              %span#main-address= @property.address + ", "
+              == #{@property.city}, #{@property.state} #{@property.zip}
+              - if @property.sold?
+                %span.display-status=display_status(@property)
+              - else
+                - if @property.reduced_price != @property.asking_price
+                  %span.price= number_to_currency(@property.reduced_price)
+                  %span.strikethrough= number_to_currency(@property.asking_price)
+                - else
+                  %span.price= number_to_currency(@property.asking_price)
 
-  - address = "#{@property.address.strip}, #{@property.city}, #{@property.state}"
+            - if !@property.size.blank?
+              #property-size.spec
+                .property-label Size:
+                = @property.size
+            - if !@property.beds_count.blank?
+              #property-beds-count.spec
+                .property-label Bedrooms:
+                = @property.beds_count
+            - if !@property.garage_size.blank?
+              #property-garage-size.spec
+                .property-label Garage:
+                = @property.garage_size
+            - if !@property.stories.blank?
+              #property-stories.spec
+                .property-label Stories:
+                = @property.stories
+            - if !@property.baths_count.blank?
+              #property-baths-count.spec
+                .property-label Bathrooms:
+                = @property.baths_count
+            - if !@property.other.blank?
+              #property-garage-size.spec
+                .property-label Other:
+                = @property.other
+            = clear
+          = @property.body.blank? ? simple_format(@property.description) : @property.body
+        - unless @property.directions.blank?
+          .panel
+            = simple_format(@property.directions)
+        - unless @property.showing_instructions.blank?
+          .panel
+            = simple_format(@property.showing_instructions)
+        - if !@property_gallery_images.empty?
+          .panel
+            .region-gallery
+              - for image in @property_gallery_images
+                .image
+                  .image-thumb-container
+                    .image-thumb
+                      = link_to image_tag(image.image.url(:medium), :alt => h(image.title), :title => h(image.title)), image.image.url(:large), :class => "fancy", :rel => "gallery"
+                    - unless image.caption.blank?
+                      .image-caption
+                        =image.caption  
+                = cycle("","", clear)
+            = clear
+
+        - unless @property.person.profile.blank?
+          - if @property.person.properties.size > 0
+            .panel
+              -for status in ["Active", "Pending", "Sold"]
+                - if @property.person.properties.send(status.downcase.to_sym).by_price.any?
+                  - if @property.person.properties.send("pending").by_price.any? and @property.person.properties.send("sold").by_price.any?
+                    %h2= status
+                  =render :partial => "properties/property_list", :locals => {:region => @region, :properties => @property.person.properties.send(status.downcase.to_sym).by_price}
+
+    - address = "#{@property.address.strip}, #{@property.city}, #{@property.state}"
+  - else
+    = render :partial => "shared/slice", :locals => {:column_section_id => nil, :controller => "properties", :action => "show"}, :collection => @main_column_sections
 - content_for :side_column do
   - if !@region.address.blank?
     #map-outer{:class => "side-column-section"}

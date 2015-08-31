@@ -6,6 +6,9 @@ class PropertiesController < ApplicationController
   end
   
   def show
+    @page = Page.find_by_permalink("properties")
+    @main_column = ((@page.main_column_id.blank? or Column.find_by_id(@page.main_column_id).blank?) ? Column.first(:conditions => {:title => "Default", :column_location => "main_column"}) : Column.find(@page.main_column_id))
+    @main_column_sections = ColumnSection.all(:conditions => {:column_id => @main_column.id, :visible => true, :column_section_id => nil})  
     @property = Property.find(params[:id])
     if !@property.plan.blank?
       @property.beds_count = @property.plan.beds_count if @property.beds_count.blank?
