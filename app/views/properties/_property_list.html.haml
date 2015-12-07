@@ -6,7 +6,6 @@
     %th#property-stories Stories
     %th#property-rooms Rooms
     %th#property-priced-from Price
-    %th#property-payment Payment
   - for property in properties
     %tr
       %td
@@ -32,4 +31,4 @@
           TBD
         - else
           = number_to_currency(property.reduced_price).gsub(".00", "") unless property.reduced_price.blank?
-      %td= property.payment
+
