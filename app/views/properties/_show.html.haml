@@ -79,7 +79,9 @@
           - if @property.sold?
             %span.display-status=display_status(@property)
           - else
-            - if @property.reduced_price != @property.asking_price
+            - if @property.reduced_price == 0
+              TBD
+            - elsif @property.reduced_price != @property.asking_price
               %span.price= number_to_currency(@property.reduced_price)
               %span.strikethrough= number_to_currency(@property.asking_price)
             - else

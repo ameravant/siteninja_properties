@@ -27,5 +27,9 @@
           %div= pluralize(property.baths_count, "bath")
         - unless property.garage_size.blank?
           %div= property.garage_size
-      %td= number_to_currency(property.reduced_price).gsub(".00", "") unless property.reduced_price.blank?
+      %td
+        - if property.reduced_price == 0
+          TBD
+        - else
+          = number_to_currency(property.reduced_price).gsub(".00", "") unless property.reduced_price.blank?
       %td= property.payment
