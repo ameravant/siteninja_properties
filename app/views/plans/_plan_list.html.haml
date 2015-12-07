@@ -6,7 +6,6 @@
     %th#property-stories Stories
     %th#property-rooms Rooms
     %th#property-priced-from Priced From
-    %th#property-payment Payment
   - for plan in plans
     %tr
       %td
@@ -24,4 +23,3 @@
         - unless plan.garage_size.blank?
           %div= plan.garage_size
       %td= number_to_currency(plan.list_price).gsub(".00", "") unless plan.list_price.blank?
-      %td= plan.payment
